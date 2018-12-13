@@ -21,14 +21,16 @@ package com.khubla.antlr4formatter;
 import org.antlr.parser.antlr4.ANTLRv4Lexer;
 import org.antlr.parser.antlr4.ANTLRv4Parser;
 import org.antlr.parser.antlr4.ANTLRv4Parser.GrammarSpecContext;
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.nio.file.CopyOption;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -45,12 +47,9 @@ public class Antlr4Formatter {
    public static String format(String string) {
       try {
          if (null != string) {
-            final ANTLRv4Lexer lexer = new ANTLRv4Lexer(new ANTLRInputStream(string));
-            final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-            final ANTLRv4Parser parser = new ANTLRv4Parser(commonTokenStream);
-            final GrammarSpecContext grammarSpecContext = parser.grammarSpec();
             StringWriter writer = new StringWriter();
-            ParseTreeWalker.DEFAULT.walk(new Antlr4ParseTreeListenerImpl(writer, commonTokenStream), grammarSpecContext);
+            CodePointCharStream input = CharStreams.fromString(string);
+            formatGrammar(input, writer);
             return writer.toString();
          } else {
             return "";
@@ -60,25 +59,25 @@ public class Antlr4Formatter {
       }
    }
 
-   public static void format(InputStream inputStream, OutputStream outputStream) throws Exception {
-      try {
-         if (null != inputStream) {
-            final Reader reader = new InputStreamReader(inputStream, "UTF-8");
-            final ANTLRv4Lexer lexer = new ANTLRv4Lexer(new ANTLRInputStream(reader));
-            final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-            final ANTLRv4Parser parser = new ANTLRv4Parser(commonTokenStream);
-            final GrammarSpecContext grammarSpecContext = parser.grammarSpec();
+   private static void formatGrammar(CharStream input, Writer output) {
+      final ANTLRv4Lexer lexer = new ANTLRv4Lexer(input);
+      final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+      final ANTLRv4Parser parser = new ANTLRv4Parser(commonTokenStream);
+      final GrammarSpecContext grammarSpecContext = parser.grammarSpec();
+      ParseTreeWalker.DEFAULT.walk(new Antlr4ParseTreeListenerImpl(output, commonTokenStream), grammarSpecContext);
+   }
 
-            try(OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
-               ParseTreeWalker.DEFAULT.walk(new Antlr4ParseTreeListenerImpl(writer, commonTokenStream), grammarSpecContext);
-               writer.flush();
-            }
-         } else {
-            throw new IllegalArgumentException();
+   public static void format(InputStream inputStream, OutputStream outputStream) {
+
+         if (null == inputStream) {
+            throw new IllegalArgumentException("Input stream must not be null!");
          }
-      } catch (final Exception e) {
-         throw new Exception("Exception reading and parsing file", e);
-      }
+            final Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+            try(OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
+               formatGrammar(CharStreams.fromReader(reader), writer);
+            } catch (IOException e) {
+               LOG.error("Could not format file", e);
+            }
    }
 
    public static void formatDirectory(String inputDirOption) throws Exception {
