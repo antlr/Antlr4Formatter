@@ -21,17 +21,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.antlr.parser.antlr4.ANTLRv4Lexer;
 import org.antlr.parser.antlr4.ANTLRv4Parser;
 import org.antlr.parser.antlr4.ANTLRv4Parser.GrammarSpecContext;
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.cli.CommandLine;
@@ -65,8 +63,7 @@ public class Antlr4Formatter {
    private static void format(InputStream inputStream, OutputStream outputStream) throws Exception {
       try {
          if (null != inputStream) {
-            final Reader reader = new InputStreamReader(inputStream, "UTF-8");
-            final ANTLRv4Lexer lexer = new ANTLRv4Lexer(new ANTLRInputStream(reader));
+            final ANTLRv4Lexer lexer = new ANTLRv4Lexer(CharStreams.fromStream(inputStream));
             final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
             final ANTLRv4Parser parser = new ANTLRv4Parser(commonTokenStream);
             final GrammarSpecContext grammarSpecContext = parser.grammarSpec();
