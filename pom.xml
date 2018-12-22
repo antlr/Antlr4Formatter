@@ -74,6 +74,7 @@
 						<argument>org.antlr.parser.antlr4</argument>
 					</arguments>
 					<visitor>true</visitor>
+					<listener>true</listener>
 					<outputDirectory>src/main/java/org/antlr/parser/antlr4</outputDirectory>
 				</configuration>
 				<executions>
