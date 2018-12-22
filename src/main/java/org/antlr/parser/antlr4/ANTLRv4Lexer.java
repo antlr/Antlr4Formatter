@@ -1,4 +1,4 @@
-// Generated from ANTLRv4Lexer.g4 by ANTLR 4.5.2
+// Generated from ANTLRv4Lexer.g4 by ANTLR 4.7.2
 package org.antlr.parser.antlr4;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ANTLRv4Lexer extends LexerAdaptor {
-	static { RuntimeMetaData.checkVersion("4.5.2", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.7.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -30,75 +30,84 @@ public class ANTLRv4Lexer extends LexerAdaptor {
 		UNTERMINATED_CHAR_SET=61;
 	public static final int
 		OFF_CHANNEL=2;
-	public static final int Argument = 1;
-	public static final int Action = 2;
-	public static final int Options = 3;
-	public static final int Tokens = 4;
-	public static final int Channels = 5;
-	public static final int LexerCharSet = 6;
+	public static final int
+		Argument=1, Action=2, Options=3, Tokens=4, Channels=5, LexerCharSet=6;
+	public static String[] channelNames = {
+		"DEFAULT_TOKEN_CHANNEL", "HIDDEN", "OFF_CHANNEL"
+	};
+
 	public static String[] modeNames = {
 		"DEFAULT_MODE", "Argument", "Action", "Options", "Tokens", "Channels", 
 		"LexerCharSet"
 	};
 
-	public static final String[] ruleNames = {
-		"DOC_COMMENT", "BLOCK_COMMENT", "LINE_COMMENT", "INT", "STRING_LITERAL", 
-		"UNTERMINATED_STRING_LITERAL", "BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS", 
-		"TOKENS", "CHANNELS", "IMPORT", "FRAGMENT", "LEXER", "PARSER", "GRAMMAR", 
-		"PROTECTED", "PUBLIC", "PRIVATE", "RETURNS", "LOCALS", "THROWS", "CATCH", 
-		"FINALLY", "MODE", "COLON", "COLONCOLON", "COMMA", "SEMI", "LPAREN", "RPAREN", 
-		"LBRACE", "RBRACE", "RARROW", "LT", "GT", "ASSIGN", "QUESTION", "STAR", 
-		"PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", "RANGE", "DOT", "AT", "POUND", 
-		"NOT", "ID", "WS", "ERRCHAR", "Ws", "Hws", "Vws", "DocComment", "BlockComment", 
-		"LineComment", "LineCommentExt", "EscSeq", "EscAny", "UnicodeEsc", "OctalEscape", 
-		"HexNumeral", "OctalNumeral", "DecimalNumeral", "BinaryNumeral", "HexDigits", 
-		"DecDigits", "OctalDigits", "BinaryDigits", "HexDigit", "DecDigit", "OctalDigit", 
-		"BinaryDigit", "BoolLiteral", "CharLiteral", "SQuoteLiteral", "DQuoteLiteral", 
-		"USQuoteLiteral", "DecimalFloatingPointLiteral", "ExponentPart", "FloatTypeSuffix", 
-		"HexadecimalFloatingPointLiteral", "HexSignificand", "BinaryExponent", 
-		"NameChar", "NameStartChar", "JavaLetter", "JavaLetterOrDigit", "JavaUnicodeChars", 
-		"Boolean", "Byte", "Short", "Int", "Long", "Char", "Float", "Double", 
-		"True", "False", "Esc", "Colon", "DColon", "SQuote", "DQuote", "BQuote", 
-		"LParen", "RParen", "LBrace", "RBrace", "LBrack", "RBrack", "RArrow", 
-		"Lt", "Gt", "Lte", "Gte", "Equal", "NotEqual", "Question", "Bang", "Star", 
-		"Slash", "Percent", "Caret", "Plus", "Minus", "PlusAssign", "MinusAssign", 
-		"MulAssign", "DivAssign", "AndAssign", "OrAssign", "XOrAssign", "ModAssign", 
-		"LShiftAssign", "RShiftAssign", "URShiftAssign", "Underscore", "Pipe", 
-		"Amp", "And", "Or", "Inc", "Dec", "LShift", "RShift", "Dollar", "Comma", 
-		"Semi", "Dot", "Range", "Ellipsis", "At", "Pound", "Tilde", "UnicodeLetter", 
-		"UnicodeClass_LU", "UnicodeClass_LL", "UnicodeClass_LT", "UnicodeClass_LM", 
-		"UnicodeClass_LO", "UnicodeDigit", "NESTED_ARGUMENT", "ARGUMENT_ESCAPE", 
-		"ARGUMENT_STRING_LITERAL", "ARGUMENT_CHAR_LITERAL", "END_ARGUMENT", "UNTERMINATED_ARGUMENT", 
-		"ARGUMENT_CONTENT", "NESTED_ACTION", "ACTION_ESCAPE", "ACTION_STRING_LITERAL", 
-		"ACTION_CHAR_LITERAL", "ACTION_DOC_COMMENT", "ACTION_BLOCK_COMMENT", "ACTION_LINE_COMMENT", 
-		"END_ACTION", "UNTERMINATED_ACTION", "ACTION_CONTENT", "OPT_DOC_COMMENT", 
-		"OPT_BLOCK_COMMENT", "OPT_LINE_COMMENT", "OPT_LBRACE", "OPT_RBRACE", "OPT_ID", 
-		"OPT_DOT", "OPT_ASSIGN", "OPT_STRING_LITERAL", "OPT_INT", "OPT_STAR", 
-		"OPT_SEMI", "OPT_WS", "TOK_DOC_COMMENT", "TOK_BLOCK_COMMENT", "TOK_LINE_COMMENT", 
-		"TOK_LBRACE", "TOK_RBRACE", "TOK_ID", "TOK_DOT", "TOK_COMMA", "TOK_WS", 
-		"CHN_DOC_COMMENT", "CHN_BLOCK_COMMENT", "CHN_LINE_COMMENT", "CHN_LBRACE", 
-		"CHN_RBRACE", "CHN_ID", "CHN_DOT", "CHN_COMMA", "CHN_WS", "LEXER_CHAR_SET_BODY", 
-		"LEXER_CHAR_SET", "UNTERMINATED_CHAR_SET", "Id"
-	};
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"DOC_COMMENT", "BLOCK_COMMENT", "LINE_COMMENT", "INT", "STRING_LITERAL", 
+			"UNTERMINATED_STRING_LITERAL", "BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS", 
+			"TOKENS", "CHANNELS", "IMPORT", "FRAGMENT", "LEXER", "PARSER", "GRAMMAR", 
+			"PROTECTED", "PUBLIC", "PRIVATE", "RETURNS", "LOCALS", "THROWS", "CATCH", 
+			"FINALLY", "MODE", "COLON", "COLONCOLON", "COMMA", "SEMI", "LPAREN", 
+			"RPAREN", "LBRACE", "RBRACE", "RARROW", "LT", "GT", "ASSIGN", "QUESTION", 
+			"STAR", "PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", "RANGE", "DOT", "AT", 
+			"POUND", "NOT", "ID", "WS", "ERRCHAR", "Ws", "Hws", "Vws", "DocComment", 
+			"BlockComment", "LineComment", "LineCommentExt", "EscSeq", "EscAny", 
+			"UnicodeEsc", "OctalEscape", "HexNumeral", "OctalNumeral", "DecimalNumeral", 
+			"BinaryNumeral", "HexDigits", "DecDigits", "OctalDigits", "BinaryDigits", 
+			"HexDigit", "DecDigit", "OctalDigit", "BinaryDigit", "BoolLiteral", "CharLiteral", 
+			"SQuoteLiteral", "DQuoteLiteral", "USQuoteLiteral", "DecimalFloatingPointLiteral", 
+			"ExponentPart", "FloatTypeSuffix", "HexadecimalFloatingPointLiteral", 
+			"HexSignificand", "BinaryExponent", "NameChar", "NameStartChar", "JavaLetter", 
+			"JavaLetterOrDigit", "JavaUnicodeChars", "Boolean", "Byte", "Short", 
+			"Int", "Long", "Char", "Float", "Double", "True", "False", "Esc", "Colon", 
+			"DColon", "SQuote", "DQuote", "BQuote", "LParen", "RParen", "LBrace", 
+			"RBrace", "LBrack", "RBrack", "RArrow", "Lt", "Gt", "Lte", "Gte", "Equal", 
+			"NotEqual", "Question", "Bang", "Star", "Slash", "Percent", "Caret", 
+			"Plus", "Minus", "PlusAssign", "MinusAssign", "MulAssign", "DivAssign", 
+			"AndAssign", "OrAssign", "XOrAssign", "ModAssign", "LShiftAssign", "RShiftAssign", 
+			"URShiftAssign", "Underscore", "Pipe", "Amp", "And", "Or", "Inc", "Dec", 
+			"LShift", "RShift", "Dollar", "Comma", "Semi", "Dot", "Range", "Ellipsis", 
+			"At", "Pound", "Tilde", "UnicodeLetter", "UnicodeClass_LU", "UnicodeClass_LL", 
+			"UnicodeClass_LT", "UnicodeClass_LM", "UnicodeClass_LO", "UnicodeDigit", 
+			"NESTED_ARGUMENT", "ARGUMENT_ESCAPE", "ARGUMENT_STRING_LITERAL", "ARGUMENT_CHAR_LITERAL", 
+			"END_ARGUMENT", "UNTERMINATED_ARGUMENT", "ARGUMENT_CONTENT", "NESTED_ACTION", 
+			"ACTION_ESCAPE", "ACTION_STRING_LITERAL", "ACTION_CHAR_LITERAL", "ACTION_DOC_COMMENT", 
+			"ACTION_BLOCK_COMMENT", "ACTION_LINE_COMMENT", "END_ACTION", "UNTERMINATED_ACTION", 
+			"ACTION_CONTENT", "OPT_DOC_COMMENT", "OPT_BLOCK_COMMENT", "OPT_LINE_COMMENT", 
+			"OPT_LBRACE", "OPT_RBRACE", "OPT_ID", "OPT_DOT", "OPT_ASSIGN", "OPT_STRING_LITERAL", 
+			"OPT_INT", "OPT_STAR", "OPT_SEMI", "OPT_WS", "TOK_DOC_COMMENT", "TOK_BLOCK_COMMENT", 
+			"TOK_LINE_COMMENT", "TOK_LBRACE", "TOK_RBRACE", "TOK_ID", "TOK_DOT", 
+			"TOK_COMMA", "TOK_WS", "CHN_DOC_COMMENT", "CHN_BLOCK_COMMENT", "CHN_LINE_COMMENT", 
+			"CHN_LBRACE", "CHN_RBRACE", "CHN_ID", "CHN_DOT", "CHN_COMMA", "CHN_WS", 
+			"LEXER_CHAR_SET_BODY", "LEXER_CHAR_SET", "UNTERMINATED_CHAR_SET", "Id"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
 
-	private static final String[] _LITERAL_NAMES = {
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		"'options'", "'tokens'", "'channels'", "'import'", "'fragment'", "'lexer'", 
-		"'parser'", "'grammar'", "'protected'", "'public'", "'private'", "'returns'", 
-		"'locals'", "'throws'", "'catch'", "'finally'", "'mode'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, "TOKEN_REF", "RULE_REF", "LEXER_CHAR_SET", "DOC_COMMENT", "BLOCK_COMMENT", 
-		"LINE_COMMENT", "INT", "STRING_LITERAL", "UNTERMINATED_STRING_LITERAL", 
-		"BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS", "TOKENS", "CHANNELS", "IMPORT", 
-		"FRAGMENT", "LEXER", "PARSER", "GRAMMAR", "PROTECTED", "PUBLIC", "PRIVATE", 
-		"RETURNS", "LOCALS", "THROWS", "CATCH", "FINALLY", "MODE", "COLON", "COLONCOLON", 
-		"COMMA", "SEMI", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "RARROW", "LT", 
-		"GT", "ASSIGN", "QUESTION", "STAR", "PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", 
-		"RANGE", "DOT", "AT", "POUND", "NOT", "ID", "WS", "ERRCHAR", "END_ARGUMENT", 
-		"UNTERMINATED_ARGUMENT", "ARGUMENT_CONTENT", "END_ACTION", "UNTERMINATED_ACTION", 
-		"ACTION_CONTENT", "UNTERMINATED_CHAR_SET"
-	};
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			"'options'", "'tokens'", "'channels'", "'import'", "'fragment'", "'lexer'", 
+			"'parser'", "'grammar'", "'protected'", "'public'", "'private'", "'returns'", 
+			"'locals'", "'throws'", "'catch'", "'finally'", "'mode'"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, "TOKEN_REF", "RULE_REF", "LEXER_CHAR_SET", "DOC_COMMENT", "BLOCK_COMMENT", 
+			"LINE_COMMENT", "INT", "STRING_LITERAL", "UNTERMINATED_STRING_LITERAL", 
+			"BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS", "TOKENS", "CHANNELS", "IMPORT", 
+			"FRAGMENT", "LEXER", "PARSER", "GRAMMAR", "PROTECTED", "PUBLIC", "PRIVATE", 
+			"RETURNS", "LOCALS", "THROWS", "CATCH", "FINALLY", "MODE", "COLON", "COLONCOLON", 
+			"COMMA", "SEMI", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "RARROW", "LT", 
+			"GT", "ASSIGN", "QUESTION", "STAR", "PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", 
+			"RANGE", "DOT", "AT", "POUND", "NOT", "ID", "WS", "ERRCHAR", "END_ARGUMENT", 
+			"UNTERMINATED_ARGUMENT", "ARGUMENT_CONTENT", "END_ACTION", "UNTERMINATED_ACTION", 
+			"ACTION_CONTENT", "UNTERMINATED_CHAR_SET"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
@@ -146,6 +155,9 @@ public class ANTLRv4Lexer extends LexerAdaptor {
 
 	@Override
 	public String getSerializedATN() { return _serializedATN; }
+
+	@Override
+	public String[] getChannelNames() { return channelNames; }
 
 	@Override
 	public String[] getModeNames() { return modeNames; }
@@ -207,7 +219,7 @@ public class ANTLRv4Lexer extends LexerAdaptor {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2?\u0571\b\1\b\1\b"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2?\u0571\b\1\b\1\b"+
 		"\1\b\1\b\1\b\1\b\1\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b"+
 		"\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20"+
 		"\t\20\4\21\t\21\4\22\t\22\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27"+
@@ -423,16 +435,16 @@ public class ANTLRv4Lexer extends LexerAdaptor {
 		"\u0f22\u0f2b\u1042\u104b\u1092\u109b\u17e2\u17eb\u1812\u181b\u1948\u1951"+
 		"\u19d2\u19db\u1a82\u1a8b\u1a92\u1a9b\u1b52\u1b5b\u1bb2\u1bbb\u1c42\u1c4b"+
 		"\u1c52\u1c5b\ua622\ua62b\ua8d2\ua8db\ua902\ua90b\ua9d2\ua9db\ua9f2\ua9fb"+
-		"\uaa52\uaa5b\uabf2\uabfb\uff12\uff1b\3\2^_\u053e\2\t\3\2\2\2\2\13\3\2"+
-		"\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\2\25\3\2\2\2\2"+
-		"\27\3\2\2\2\2\31\3\2\2\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37\3\2\2\2\2!\3\2"+
-		"\2\2\2#\3\2\2\2\2%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2\2\2+\3\2\2\2\2-\3\2\2"+
-		"\2\2/\3\2\2\2\2\61\3\2\2\2\2\63\3\2\2\2\2\65\3\2\2\2\2\67\3\2\2\2\29\3"+
-		"\2\2\2\2;\3\2\2\2\2=\3\2\2\2\2?\3\2\2\2\2A\3\2\2\2\2C\3\2\2\2\2E\3\2\2"+
-		"\2\2G\3\2\2\2\2I\3\2\2\2\2K\3\2\2\2\2M\3\2\2\2\2O\3\2\2\2\2Q\3\2\2\2\2"+
-		"S\3\2\2\2\2U\3\2\2\2\2W\3\2\2\2\2Y\3\2\2\2\2[\3\2\2\2\2]\3\2\2\2\2_\3"+
-		"\2\2\2\2a\3\2\2\2\2c\3\2\2\2\2e\3\2\2\2\2g\3\2\2\2\2i\3\2\2\2\2k\3\2\2"+
-		"\2\2m\3\2\2\2\3\u014f\3\2\2\2\3\u0151\3\2\2\2\3\u0153\3\2\2\2\3\u0155"+
+		"\uaa52\uaa5b\uabf2\uabfb\uff12\uff1b\3\2^_\2\u053e\2\t\3\2\2\2\2\13\3"+
+		"\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\2\25\3\2\2\2"+
+		"\2\27\3\2\2\2\2\31\3\2\2\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37\3\2\2\2\2!\3"+
+		"\2\2\2\2#\3\2\2\2\2%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2\2\2+\3\2\2\2\2-\3\2"+
+		"\2\2\2/\3\2\2\2\2\61\3\2\2\2\2\63\3\2\2\2\2\65\3\2\2\2\2\67\3\2\2\2\2"+
+		"9\3\2\2\2\2;\3\2\2\2\2=\3\2\2\2\2?\3\2\2\2\2A\3\2\2\2\2C\3\2\2\2\2E\3"+
+		"\2\2\2\2G\3\2\2\2\2I\3\2\2\2\2K\3\2\2\2\2M\3\2\2\2\2O\3\2\2\2\2Q\3\2\2"+
+		"\2\2S\3\2\2\2\2U\3\2\2\2\2W\3\2\2\2\2Y\3\2\2\2\2[\3\2\2\2\2]\3\2\2\2\2"+
+		"_\3\2\2\2\2a\3\2\2\2\2c\3\2\2\2\2e\3\2\2\2\2g\3\2\2\2\2i\3\2\2\2\2k\3"+
+		"\2\2\2\2m\3\2\2\2\3\u014f\3\2\2\2\3\u0151\3\2\2\2\3\u0153\3\2\2\2\3\u0155"+
 		"\3\2\2\2\3\u0157\3\2\2\2\3\u0159\3\2\2\2\3\u015b\3\2\2\2\4\u015d\3\2\2"+
 		"\2\4\u015f\3\2\2\2\4\u0161\3\2\2\2\4\u0163\3\2\2\2\4\u0165\3\2\2\2\4\u0167"+
 		"\3\2\2\2\4\u0169\3\2\2\2\4\u016b\3\2\2\2\4\u016d\3\2\2\2\4\u016f\3\2\2"+

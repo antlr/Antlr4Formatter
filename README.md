@@ -3,3 +3,13 @@
 
 # Antlr4Formatter
 
+Using the formatter
+====
+
+Antlr4Formatter is a commmand-line application. To build the application
+
+`mvn clean package`
+
+
+To format a grammar use the script `formatFile.sh` passing the grammar file as an argument to the script
+
