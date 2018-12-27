@@ -283,7 +283,7 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
    /**
     * write to the output stream
     */
-   void write(String str) {
+   private void write(String str) {
       /*
        * print token
        */
