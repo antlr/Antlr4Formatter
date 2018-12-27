@@ -17,7 +17,17 @@
  */
 package com.khubla.antlr4formatter;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -39,104 +49,100 @@ import org.slf4j.LoggerFactory;
  * @author Tom Everett
  */
 public class Antlr4Formatter {
+   private static final Logger LOG = LoggerFactory.getLogger(Antlr4Formatter.class);
 
-	private Antlr4Formatter() {}
+   public static void format(InputStream inputStream, OutputStream outputStream) {
+      if (null == inputStream) {
+         throw new IllegalArgumentException("Input stream must not be null!");
+      }
+      final Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+      try (OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
+         formatGrammar(CharStreams.fromReader(reader), writer);
+      } catch (final IOException e) {
+         LOG.error("Could not format file", e);
+      }
+   }
 
-	private static final Logger LOG = LoggerFactory.getLogger(Antlr4Formatter.class);
+   public static String format(String string) throws Antlr4FormatterException {
+      try {
+         if (null != string) {
+            final StringWriter writer = new StringWriter();
+            final CodePointCharStream input = CharStreams.fromString(string);
+            formatGrammar(input, writer);
+            return writer.toString();
+         } else {
+            return "";
+         }
+      } catch (final Exception e) {
+         throw new Antlr4FormatterException("Exception reading and parsing file", e);
+      }
+   }
 
-	public static String format(String string) {
-		try {
-			if (null != string) {
-				StringWriter writer = new StringWriter();
-				CodePointCharStream input = CharStreams.fromString(string);
-				formatGrammar(input, writer);
-				return writer.toString();
-			} else {
-				return "";
-			}
-		} catch (final Exception e) {
-			throw new RuntimeException("Exception reading and parsing file", e);
-		}
-	}
+   public static void formatDirectory(String inputDirOption) throws Antlr4FormatterException {
+      List<String> files = new ArrayList<>();
+      files = listFilesFromDirectory(inputDirOption, files, ".g4");
+      for (final String filename : files) {
+         final File file = new File(filename);
+         formatSingleFile(file, file);
+      }
+   }
 
-	private static void formatGrammar(CharStream input, Writer output) {
-		final ANTLRv4Lexer lexer = new ANTLRv4Lexer(input);
-		final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-		final ANTLRv4Parser parser = new ANTLRv4Parser(commonTokenStream);
-		final GrammarSpecContext grammarSpecContext = parser.grammarSpec();
-		ParseTreeWalker.DEFAULT.walk(new Antlr4ParseTreeListenerImpl(output, commonTokenStream), grammarSpecContext);
-	}
+   private static void formatGrammar(CharStream input, Writer output) {
+      final ANTLRv4Lexer lexer = new ANTLRv4Lexer(input);
+      final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+      final ANTLRv4Parser parser = new ANTLRv4Parser(commonTokenStream);
+      final GrammarSpecContext grammarSpecContext = parser.grammarSpec();
+      ParseTreeWalker.DEFAULT.walk(new Antlr4ParseTreeListenerImpl(output, commonTokenStream), grammarSpecContext);
+   }
 
-	public static void format(InputStream inputStream, OutputStream outputStream) {
+   public static void formatSingleFile(File inputFile, File outputFile) throws Antlr4FormatterException {
+      try {
+         if (inputFile.exists()) {
+            final File tempFile = File.createTempFile(inputFile.getName(), ".g4");
+            LOG.info("Formatting: {}", inputFile.getName());
+            format(new FileInputStream(inputFile), new FileOutputStream(tempFile));
+            Files.copy(tempFile.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.delete(tempFile.toPath());
+         } else {
+            throw new Exception("Unable to find: '" + inputFile + "'");
+         }
+      } catch (final Exception e) {
+         throw new Antlr4FormatterException("Exception fromatting file", e);
+      }
+   }
 
-		if (null == inputStream) {
-			throw new IllegalArgumentException("Input stream must not be null!");
-		}
-		final Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-		try (OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
-			formatGrammar(CharStreams.fromReader(reader), writer);
-		} catch (IOException e) {
-			LOG.error("Could not format file", e);
-		}
-	}
+   public static void formatSingleFile(String inputFilename, String outputFilename) throws Antlr4FormatterException {
+      final File inputFile = new File(inputFilename);
+      File outputFile;
+      if (null == outputFilename) {
+         outputFile = inputFile;
+      } else {
+         outputFile = new File(outputFilename);
+      }
+      formatSingleFile(inputFile, outputFile);
+   }
 
-	public static void formatDirectory(String inputDirOption) throws Exception {
-		List<String> files = new ArrayList<>();
-		files = listFilesFromDirectory(inputDirOption, files, ".g4");
-		for (final String filename : files) {
-			final File file = new File(filename);
-			formatSingleFile(file, file);
-		}
-	}
+   private static List<String> listFilesFromDirectory(String dir, List<String> files, String filter) {
+      final File file = new File(dir);
+      final String[] list = file.list();
+      if (null != list) {
+         for (final String s : list) {
+            final String fileName = dir + (dir.endsWith("/") ? "" : "/") + s;
+            final File f2 = new File(fileName);
+            if (!f2.isHidden()) {
+               if (f2.isDirectory()) {
+                  listFilesFromDirectory(fileName + "/", files, filter);
+               } else {
+                  if (fileName.endsWith(filter)) {
+                     files.add(fileName);
+                  }
+               }
+            }
+         }
+      }
+      return files;
+   }
 
-	public static void formatSingleFile(File inputFile, File outputFile) throws Exception {
-
-		if (inputFile.exists()) {
-
-			final File tempFile = File.createTempFile(inputFile.getName(), ".g4");
-
-			LOG.info("Formatting: {}", inputFile.getName());
-
-			format(new FileInputStream(inputFile), new FileOutputStream(tempFile));
-
-			Files.copy(tempFile.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			Files.delete(tempFile.toPath());
-		} else {
-			throw new Exception("Unable to find: '" + inputFile + "'");
-		}
-	}
-
-	public static void formatSingleFile(String inputFilename, String outputFilename) throws Exception {
-		final File inputFile = new File(inputFilename);
-		File outputFile;
-
-		if (null == outputFilename) {
-			outputFile = inputFile;
-		} else {
-			outputFile = new File(outputFilename);
-		}
-
-		formatSingleFile(inputFile, outputFile);
-	}
-
-	private static List<String> listFilesFromDirectory(String dir, List<String> files, String filter) {
-		final File file = new File(dir);
-		final String[] list = file.list();
-		if (null != list) {
-			for (String s : list) {
-				final String fileName = dir + (dir.endsWith("/") ? "" : "/") + s;
-				final File f2 = new File(fileName);
-				if (!f2.isHidden()) {
-					if (f2.isDirectory()) {
-						listFilesFromDirectory(fileName + "/", files, filter);
-					} else {
-						if (fileName.endsWith(filter)) {
-							files.add(fileName);
-						}
-					}
-				}
-			}
-		}
-		return files;
-	}
+   private Antlr4Formatter() {
+   }
 }
