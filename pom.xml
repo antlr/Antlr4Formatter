@@ -11,7 +11,7 @@
 
     <properties>
         <commons-cli.version>1.4</commons-cli.version>
-        <antlr.version>4.7.1</antlr.version>
+        <antlr.version>4.7.2</antlr.version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.1.5</logback.version>
         <junit.version>4.12</junit.version>
