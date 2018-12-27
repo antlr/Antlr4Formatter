@@ -5,7 +5,7 @@
 
 ## Building
 
-The project uses [maven wrapper](https://github.com/takari/maven-wrapper), so it's easy to build the project without worring about having the right Maven version installed locally.
+The project uses [maven wrapper](https://github.com/takari/maven-wrapper), so it's easy to build the project without worrying about having the right Maven version installed locally.
 
 To build `antlr4-formatter` and the standalone utility `antlr4-formatter-standalone` run:
 
