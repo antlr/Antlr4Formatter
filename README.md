@@ -3,13 +3,18 @@
 
 # Antlr4Formatter
 
-Using the formatter
+building
+====
+The project uses [maven wrapper](https://github.com/takari/maven-wrapper), so it's easy to build the project without worring about having the right Maven version installed locally.
+
+To build `antlr4-formatter` and the standalone utility `antlr4-formatter-standalone` run:
+
+```bash
+./mvnw clean package
+```
+
+using the standalone formatter
 ====
 
-Antlr4Formatter is a commmand-line application. To build the application
-
-`mvn clean package`
-
-
-To format a grammar use the script `formatFile.sh` passing the grammar file as an argument to the script
+To format a grammar use the script `formatFile.sh` passing the grammar file as an argument to the script.
 

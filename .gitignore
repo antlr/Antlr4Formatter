@@ -5,7 +5,9 @@
 .project
 .classpath
 .settings
+bin
 
+.mvn/wrapper/maven-wrapper.jar
 target
 test-output
 
