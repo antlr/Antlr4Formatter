@@ -17,12 +17,8 @@
  */
 package com.khubla.antlr4formatter;
 
-import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import org.antlr.parser.antlr4.ANTLRv4Lexer;
+import org.antlr.parser.antlr4.ANTLRv4Parser;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Recognizer;
@@ -33,16 +29,24 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
+
    /**
     *
     */
-   private static final Logger logger = LoggerFactory.getLogger(Antlr4ParseTreeListenerImpl.class);
+   private static final Logger LOG = LoggerFactory.getLogger(Antlr4ParseTreeListenerImpl.class);
    /**
     * non space tokens
     */
-   private static final Set<String> noSpacingBeforeTokens = new HashSet<String>(Arrays.asList(new String[] { "?", "*", ";", ")" }));
-   private static final Set<String> noSpacingAfterTokens = new HashSet<String>(Arrays.asList(new String[] { "(" }));
+   private static final Set<String> noSpacingBeforeTokens = new HashSet<>(Arrays.asList(new String[] { "?", "*", ";", ")" }));
+   private static final Set<String> noSpacingAfterTokens = new HashSet<>(Arrays.asList(new String[] { "(" }));
    /**
     * indent
     */
@@ -58,7 +62,7 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
    /**
     * PrintStream
     */
-   private final PrintStream printStream;
+   private final Writer writer;
    /**
     * token stream
     */
@@ -79,8 +83,8 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
    /**
     * ctor
     */
-   public Antlr4ParseTreeListenerImpl(PrintStream printStream, CommonTokenStream commonTokenStream) {
-      this.printStream = printStream;
+   public Antlr4ParseTreeListenerImpl(Writer writer, CommonTokenStream commonTokenStream) {
+      this.writer = writer;
       this.commonTokenStream = commonTokenStream;
    }
 
@@ -99,8 +103,8 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
     * write a CR
     */
    void CR() {
-      printStream.println();
-      printStream.print(buildIndent(indent));
+      writeSimple("\n");
+      writeSimple(buildIndent(indent));
       newline = true;
    }
 
@@ -174,12 +178,12 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
       /*
        * log the rule
        */
-      logger.debug(ctx.getClass().getSimpleName() + " : " + node.getText());
+      LOG.debug(ctx.getClass().getSimpleName() + " : " + node.getText());
       /*
        * options indenting
        */
       if ((ctx instanceof ANTLRv4Parser.OptionsSpecContext) || (ctx instanceof ANTLRv4Parser.ModeSpecContext) || (ctx instanceof ANTLRv4Parser.TokensSpecContext)
-            || (ctx instanceof ANTLRv4Parser.ChannelsSpecContext)) {
+          || (ctx instanceof ANTLRv4Parser.ChannelsSpecContext)) {
          if (node.getSymbol().getType() == ANTLRv4Lexer.LBRACE) {
             indent++;
             CR();
@@ -275,6 +279,14 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
       }
    }
 
+   private void writeSimple(String string) {
+      try {
+         writer.write(string);
+      } catch (IOException e) {
+         throw new RuntimeException("Could not write to writer", e);
+      }
+   }
+
    /**
     * write to the output stream
     */
@@ -282,7 +294,7 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
       /*
        * print token
        */
-      printStream.print(str);
+      writeSimple(str);
       if (true == newline) {
          newline = false;
       }
@@ -290,25 +302,26 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
        * save the previous
        */
       previousToken = str;
+
    }
 
    /**
     * write to the output stream
     */
    void write(TerminalNode node) {
-      logger.debug("Writing: '" + node.getText() + "'");
+      LOG.debug("Writing: '" + node.getText() + "'");
       /*
        * space before the output
        */
       if (false == (ctx instanceof ANTLRv4Parser.ActionBlockContext)) {
          if ((false == newline) && (false == noSpacingAfterTokens.contains(previousToken)) && (false == noSpacingBeforeTokens.contains(node.getText()))) {
-            printStream.print(" ");
+            writeSimple(" ");
          }
       }
       /*
        * print token
        */
-      printStream.print(node.getText());
+      writeSimple(node.getText());
       if (true == newline) {
          newline = false;
       }
