@@ -184,6 +184,10 @@
                 <artifactId>spotless-maven-plugin</artifactId>
                 <version>${spotless.version}</version>
                 <configuration>
+                    <lineEndings>UNIX</lineEndings>
+
+                    <encoding>UTF-8</encoding>
+
                     <java>
                         <eclipse>
                             <file>${basedir}/format.eclipse.xml</file>
