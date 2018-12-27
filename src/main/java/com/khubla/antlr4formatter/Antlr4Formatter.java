@@ -40,6 +40,8 @@ import org.slf4j.LoggerFactory;
  */
 public class Antlr4Formatter {
 
+	private Antlr4Formatter() {}
+
 	private static final Logger LOG = LoggerFactory.getLogger(Antlr4Formatter.class);
 
 	public static String format(String string) {

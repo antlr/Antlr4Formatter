@@ -17,12 +17,11 @@ public class Antlr4FormatterTest {
 	@Test
 	public void formatString() throws IOException {
 		// given
-		Antlr4Formatter formatter = new Antlr4Formatter();
 		String unformattedGrammar = readFileAsUtf8ToString("Hello.unformatted.g4");
 		String formattedGrammar = readFileAsUtf8ToString("Hello.formatted.g4");
 
 		// when
-		String result = formatter.format(unformattedGrammar);
+		String result = Antlr4Formatter.format(unformattedGrammar);
 
 		// then
 		assertThat(result).isEqualTo(formattedGrammar);
