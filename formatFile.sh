@@ -1,4 +1,3 @@
 #!/bin/sh
 
-java -jar target/antlr4formatter-0.1.0-SNAPSHOT.jar --input=$1
-
+java -jar antlr4-formatter-standalone/target/antlr4-formatter-standalone-0.1.0-SNAPSHOT.jar --input=$1
