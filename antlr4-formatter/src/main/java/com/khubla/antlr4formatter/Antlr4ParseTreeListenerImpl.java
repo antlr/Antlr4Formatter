@@ -57,7 +57,7 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
    /**
     * newline
     */
-   boolean newline = true;
+   private boolean newline = true;
    /**
     * PrintStream
     */

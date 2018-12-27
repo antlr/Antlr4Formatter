@@ -25,5 +25,3 @@ To format a grammar use the script `formatFile.sh` passing the grammar file as a
 <version>1.1.0</version>
 <packaging>jar</packaging>
 ```
-
-
