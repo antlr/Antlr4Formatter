@@ -101,7 +101,7 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
    /**
     * write a CR
     */
-   private void CR() {
+   private void writeCR() {
       writeSimple("\n");
       writeSimple(buildIndent(indent));
       newline = true;
@@ -125,11 +125,11 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
                if (str.length() > 0) {
                   if (str.trim().startsWith("//") || str.trim().startsWith("/*")) {
                      if ((false == (ctx instanceof ANTLRv4Parser.GrammarSpecContext))) {
-                        CR();
+                        writeCR();
                      }
                      write(token.getText());
                      if ((true == ((ctx instanceof ANTLRv4Parser.GrammarSpecContext))) || (ctx instanceof ANTLRv4Parser.GrammarTypeContext)) {
-                        CR();
+                        writeCR();
                      }
                   }
                }
@@ -138,25 +138,25 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
       }
       if (ctx instanceof ANTLRv4Parser.RuleSpecContext) {
          this.ctx = ctx;
-         CR();
+         writeCR();
       } else if (ctx instanceof ANTLRv4Parser.GrammarSpecContext) {
          this.ctx = ctx;
-         CR();
+         writeCR();
       } else if (ctx instanceof ANTLRv4Parser.OptionsSpecContext) {
          this.ctx = ctx;
-         CR();
+         writeCR();
       } else if (ctx instanceof ANTLRv4Parser.TokensSpecContext) {
          this.ctx = ctx;
-         CR();
+         writeCR();
       } else if (ctx instanceof ANTLRv4Parser.ChannelsSpecContext) {
          this.ctx = ctx;
-         CR();
+         writeCR();
       } else if (ctx instanceof ANTLRv4Parser.ModeSpecContext) {
          this.ctx = ctx;
-         CR();
+         writeCR();
       } else if (ctx instanceof ANTLRv4Parser.LexerRuleSpecContext) {
          this.ctx = ctx;
-         CR();
+         writeCR();
       } else if (ctx instanceof ANTLRv4Parser.LabeledAltContext) {
          this.ctx = ctx;
       } else if (ctx instanceof ANTLRv4Parser.ActionBlockContext) {
@@ -187,12 +187,12 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
             || (ctx instanceof ANTLRv4Parser.ChannelsSpecContext)) {
          if (node.getSymbol().getType() == ANTLRv4Lexer.LBRACE) {
             indent++;
-            CR();
+            writeCR();
             write(node);
          } else if (node.getSymbol().getType() == ANTLRv4Lexer.RBRACE) {
             write(node);
             indent--;
-            CR();
+            writeCR();
          } else {
             write(node);
          }
@@ -203,13 +203,13 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
             parenthcount--;
          }
          if (node.getSymbol().getType() == ANTLRv4Lexer.SEMI) {
-            CR();
+            writeCR();
             write(node);
             indent--;
-            CR();
+            writeCR();
          } else if (node.getSymbol().getType() == ANTLRv4Lexer.OR) {
             if (parenthcount == 0) {
-               CR();
+               writeCR();
             }
             write(node);
          } else {
@@ -225,16 +225,16 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
          parenthcount = 0;
          if (node.getSymbol().getType() == ANTLRv4Lexer.COLON) {
             indent++;
-            CR();
+            writeCR();
             write(node);
          } else if (node.getSymbol().getType() == ANTLRv4Lexer.SEMI) {
-            CR();
+            writeCR();
             write(node);
             indent--;
-            CR();
+            writeCR();
          } else if (node.getSymbol().getType() == ANTLRv4Lexer.DOC_COMMENT) {
             write(node);
-            CR();
+            writeCR();
          } else {
             if (node.getSymbol().getType() != Recognizer.EOF) {
                write(node);
@@ -247,10 +247,10 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
       else if (ctx instanceof ANTLRv4Parser.GrammarSpecContext) {
          if (node.getSymbol().getType() == ANTLRv4Lexer.SEMI) {
             write(node);
-            CR();
+            writeCR();
          } else if (node.getSymbol().getType() == ANTLRv4Lexer.DOC_COMMENT) {
             write(node);
-            CR();
+            writeCR();
          } else {
             write(node);
          }
@@ -261,13 +261,13 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
       else if (ctx instanceof ANTLRv4Parser.ActionBlockContext) {
          if (node.getSymbol().getType() == ANTLRv4Lexer.SEMI) {
             write(node);
-            CR();
+            writeCR();
          } else if (node.getSymbol().getType() == ANTLRv4Lexer.DOC_COMMENT) {
             write(node);
-            CR();
+            writeCR();
          } else if (node.getSymbol().getType() == ANTLRv4Lexer.AT) {
             write(node);
-            CR();
+            writeCR();
          } else {
             write(node);
          }
