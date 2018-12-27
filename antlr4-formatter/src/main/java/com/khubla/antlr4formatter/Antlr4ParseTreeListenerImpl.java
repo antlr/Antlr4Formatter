@@ -98,15 +98,6 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
       return sb.toString();
    }
 
-   /**
-    * write a CR
-    */
-   private void writeCR() {
-      writeSimple("\n");
-      writeSimple(buildIndent(indent));
-      newline = true;
-   }
-
    @Override
    public void enterEveryRule(ParserRuleContext ctx) {
       /*
@@ -321,6 +312,15 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
        * save the previous
        */
       previousToken = node.getText();
+   }
+
+   /**
+    * write a CR
+    */
+   private void writeCR() {
+      writeSimple("\n");
+      writeSimple(buildIndent(indent));
+      newline = true;
    }
 
    private void writeSimple(String string) {

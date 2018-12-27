@@ -63,7 +63,7 @@ public class Antlr4Formatter {
       }
    }
 
-   public static String format(String string) {
+   public static String format(String string) throws Antlr4FormatterException {
       try {
          if (null != string) {
             final StringWriter writer = new StringWriter();
@@ -74,11 +74,11 @@ public class Antlr4Formatter {
             return "";
          }
       } catch (final Exception e) {
-         throw new RuntimeException("Exception reading and parsing file", e);
+         throw new Antlr4FormatterException("Exception reading and parsing file", e);
       }
    }
 
-   public static void formatDirectory(String inputDirOption) throws Exception {
+   public static void formatDirectory(String inputDirOption) throws Antlr4FormatterException {
       List<String> files = new ArrayList<>();
       files = listFilesFromDirectory(inputDirOption, files, ".g4");
       for (final String filename : files) {
@@ -95,19 +95,23 @@ public class Antlr4Formatter {
       ParseTreeWalker.DEFAULT.walk(new Antlr4ParseTreeListenerImpl(output, commonTokenStream), grammarSpecContext);
    }
 
-   public static void formatSingleFile(File inputFile, File outputFile) throws Exception {
-      if (inputFile.exists()) {
-         final File tempFile = File.createTempFile(inputFile.getName(), ".g4");
-         LOG.info("Formatting: {}", inputFile.getName());
-         format(new FileInputStream(inputFile), new FileOutputStream(tempFile));
-         Files.copy(tempFile.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-         Files.delete(tempFile.toPath());
-      } else {
-         throw new Exception("Unable to find: '" + inputFile + "'");
+   public static void formatSingleFile(File inputFile, File outputFile) throws Antlr4FormatterException {
+      try {
+         if (inputFile.exists()) {
+            final File tempFile = File.createTempFile(inputFile.getName(), ".g4");
+            LOG.info("Formatting: {}", inputFile.getName());
+            format(new FileInputStream(inputFile), new FileOutputStream(tempFile));
+            Files.copy(tempFile.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.delete(tempFile.toPath());
+         } else {
+            throw new Exception("Unable to find: '" + inputFile + "'");
+         }
+      } catch (final Exception e) {
+         throw new Antlr4FormatterException("Exception fromatting file", e);
       }
    }
 
-   public static void formatSingleFile(String inputFilename, String outputFilename) throws Exception {
+   public static void formatSingleFile(String inputFilename, String outputFilename) throws Antlr4FormatterException {
       final File inputFile = new File(inputFilename);
       File outputFile;
       if (null == outputFilename) {
