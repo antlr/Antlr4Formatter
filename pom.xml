@@ -14,6 +14,7 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<logback.version>1.1.5</logback.version>
 		<junit.version>4.12</junit.version>
+		<assertj.version>3.11.1</assertj.version>
 
 		<target.jvm>1.7</target.jvm>
 
@@ -47,6 +48,13 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertj.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -143,6 +151,7 @@
 						</goals>
 						<configuration>
 							<shadedClassifierName>standalone</shadedClassifierName>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
 						</configuration>
 					</execution>
 				</executions>
