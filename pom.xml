@@ -110,6 +110,23 @@
 							<file>${maven.multiModuleProjectDirectory}/format.importorder</file>
 						</importOrder>
 					</java>
+
+                    <formats>
+                        <format>
+                            <includes>
+                                <include>**/pom.xml</include>
+                            </includes>
+
+                            <indent>
+                                <spaces>true</spaces>
+                                <spacesPerTab>4</spacesPerTab>
+                            </indent>
+
+                            <trimTrailingWhitespace />
+
+                            <endWithNewline />
+                        </format>
+                    </formats>
 				</configuration>
 			</plugin>
 		</plugins>
