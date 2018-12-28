@@ -125,6 +125,11 @@
 			<name>Tom Everett</name>
 			<email>tom@khubla.com</email>
 		</developer>
+		<developer>
+			<id>matthiasbalke</id>
+			<name>Matthias Balke</name>
+			<email>matthias.balke@googlemail.com</email>
+		</developer>
 	</developers>
 	<licenses>
 		<license>
