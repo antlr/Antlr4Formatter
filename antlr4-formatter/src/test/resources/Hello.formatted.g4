@@ -2,17 +2,18 @@
 
 grammar Hello;
 
+// match keyword hello followed by an identifier
 r
    : 'hello' ID
    ;
 
-// match keyword hello followed by an identifier
+// match lower-case identifiers
 
 ID
    : [a-z] +
    ;
 
-// match lower-case identifiers
+// skip spaces, tabs, newlines
 
 WS
    : [ \t\r\n] + -> skip
