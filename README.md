@@ -9,7 +9,7 @@ The project uses [maven wrapper](https://github.com/takari/maven-wrapper), so it
 
 To build `antlr4-formatter` and the standalone utility `antlr4-formatter-standalone` run:
 
-```bash
+```sh
 ./mvnw clean package
 ```
 
@@ -19,9 +19,17 @@ To format a grammar use the script `formatFile.sh` passing the grammar file as a
 
 ## Maven Coordinates
 
-```
+```xml
 <groupId>com.khubla.antlr4formatter</groupId>
 <artifactId>antlr4-formatter</artifactId>
 <version>1.1.0</version>
 <packaging>jar</packaging>
 ```
+
+## Contributing
+
+Contributions are welcome. To shorten the process of reviewing the pull request be sure that the code conforms to the projects code style. Before committing fix the code format by running [spotless](https://github.com/diffplug/spotless):
+
+```sh
+./mvnw spotless:apply
+``` 
