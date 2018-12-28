@@ -23,8 +23,8 @@
 		<!-- dependencies used in all modules -->
 		<slf4j.version>1.7.25</slf4j.version>
 		<junit.version>4.12</junit.version>
-		<assertj.version>2.9.1</assertj.version>
-		<spotless.version>1.16.0</spotless.version>
+		<assertj.version>3.11.1</assertj.version>
+		<spotless.version>1.17.0</spotless.version>
 	</properties>
 
 	<dependencies>
