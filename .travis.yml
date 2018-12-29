@@ -10,3 +10,7 @@ script:
   - ./mvnw test --batch-mode || true
   - curl -O -L https://github.com/codacy/codacy-coverage-reporter/releases/download/4.0.5/codacy-coverage-reporter-4.0.5-assembly.jar
   - java -jar codacy-coverage-reporter-4.0.5-assembly.jar report -l Java -r antlr4-formatter-coverage/target/site/jacoco-aggregate/jacoco.xml
+
+cache:
+  directories:
+    - $HOME/.m2
