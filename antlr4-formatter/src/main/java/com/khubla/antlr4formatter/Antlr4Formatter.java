@@ -41,9 +41,10 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.khubla.antlr4formatter.listener.FormatterListener;
 
 /**
  * @author Tom Everett
@@ -92,7 +93,7 @@ public class Antlr4Formatter {
       final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
       final ANTLRv4Parser parser = new ANTLRv4Parser(commonTokenStream);
       final GrammarSpecContext grammarSpecContext = parser.grammarSpec();
-      ParseTreeWalker.DEFAULT.walk(new Antlr4ParseTreeListenerImpl(output, commonTokenStream), grammarSpecContext);
+      grammarSpecContext.enterRule(new FormatterListener());
    }
 
    public static void formatSingleFile(File inputFile, File outputFile) throws Antlr4FormatterException {
