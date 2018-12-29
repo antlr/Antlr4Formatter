@@ -13,6 +13,7 @@
 	<modules>
 		<module>antlr4-formatter</module>
 		<module>antlr4-formatter-standalone</module>
+		<module>antlr4-formatter-coverage</module>
 	</modules>
 
 	<properties>
