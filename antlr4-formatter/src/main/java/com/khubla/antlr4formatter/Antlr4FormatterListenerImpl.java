@@ -21,35 +21,30 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.antlr.parser.antlr4.ANTLRv4Lexer;
 import org.antlr.parser.antlr4.ANTLRv4Parser;
-import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
+import com.khubla.antlr4formatter.listener.FormatterListener;
+
+public class Antlr4FormatterListenerImpl implements FormatterListener {
    /**
    *
    */
-   private static final Logger LOG = LoggerFactory.getLogger(Antlr4ParseTreeListenerImpl.class);
+   private static final Logger logger = LoggerFactory.getLogger(Antlr4FormatterListenerImpl.class);
    /**
     * non space tokens
     */
    private static final Set<String> noSpacingBeforeTokens = new HashSet<>(Arrays.asList(new String[] { "?", "*", ";", ")" }));
    private static final Set<String> noSpacingAfterTokens = new HashSet<>(Arrays.asList(new String[] { "(" }));
-   /**
-    * comment tokens
-    */
-   private static final Set<String> commentTokens = new HashSet<>(Arrays.asList(new String[] { "/*", "//" }));
    /**
     * indent
     */
@@ -67,18 +62,6 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
     */
    private final Writer writer;
    /**
-    * token stream
-    */
-   private final CommonTokenStream commonTokenStream;
-   /**
-    * left hidden token marker
-    */
-   private int leftHiddenTokenPos = -1;
-   /**
-    * right hidden token marker
-    */
-   private int rightHiddenTokenPos = -1;
-   /**
     * parenth count
     */
    private int parenthCount = 0;
@@ -90,9 +73,8 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
    /**
     * ctor
     */
-   public Antlr4ParseTreeListenerImpl(Writer writer, CommonTokenStream commonTokenStream) {
+   public Antlr4FormatterListenerImpl(Writer writer) {
       this.writer = writer;
-      this.commonTokenStream = commonTokenStream;
    }
 
    /**
@@ -108,10 +90,6 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
 
    @Override
    public void enterEveryRule(ParserRuleContext ctx) {
-      /*
-       * left hidden tokens
-       */
-      printLeftHiddenTokens(ctx);
       /*
        * ctx change
        */
@@ -145,75 +123,17 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
 
    @Override
    public void exitEveryRule(ParserRuleContext ctx) {
-      printRightHiddenTokens(ctx);
    }
 
-   /**
-    * check if string is comment
-    */
-   private boolean isComment(String str) {
-      for (final String c : commentTokens) {
-         if (str.startsWith(c)) {
-            return true;
-         }
+   @Override
+   public void visitComment(ParserRuleContext ctx, Token token) {
+      if ((false == (ctx instanceof ANTLRv4Parser.GrammarSpecContext))) {
+         writeCR();
       }
-      return false;
-   }
-
-   private void printLeftHiddenTokens(ParserRuleContext ctx) {
-      /*
-       * check for hidden tokens left of the ctx
-       */
-      final int tokPos = tokenStart(ctx);
-      if (tokPos > leftHiddenTokenPos) {
-         leftHiddenTokenPos = tokPos;
-         final List<Token> refChannel = commonTokenStream.getHiddenTokensToLeft(tokPos, ANTLRv4Lexer.COMMENT);
-         if ((null != refChannel) && (refChannel.size() > 0)) {
-            for (final Token token : refChannel) {
-               /*
-                * print comments
-                */
-               final String str = token.getText().trim();
-               if (str.length() > 0) {
-                  if (isComment(str)) {
-                     writeComment(ctx, token.getText());
-                  }
-               }
-            }
-         }
+      write(token.getText());
+      if ((true == ((ctx instanceof ANTLRv4Parser.GrammarSpecContext))) || (ctx instanceof ANTLRv4Parser.GrammarTypeContext)) {
+         writeCR();
       }
-   }
-
-   private void printRightHiddenTokens(ParserRuleContext ctx) {
-      /*
-       * check for hidden tokens right of the ctx
-       */
-      final int tokPos = tokenStop(ctx);
-      if (tokPos > rightHiddenTokenPos) {
-         rightHiddenTokenPos = tokPos;
-         final List<Token> refChannel = commonTokenStream.getHiddenTokensToRight(tokPos, ANTLRv4Lexer.COMMENT);
-         if ((null != refChannel) && (refChannel.size() > 0)) {
-            for (final Token token : refChannel) {
-               /*
-                * print comments
-                */
-               final String str = token.getText().trim();
-               if (str.length() > 0) {
-                  if (isComment(str)) {
-                     writeComment(ctx, token.getText());
-                  }
-               }
-            }
-         }
-      }
-   }
-
-   int tokenStart(ParserRuleContext ctx) {
-      return (ctx.getStart().getTokenIndex() < ctx.getStop().getTokenIndex()) ? ctx.getStart().getTokenIndex() : ctx.getStop().getTokenIndex();
-   }
-
-   int tokenStop(ParserRuleContext ctx) {
-      return (ctx.getStop().getTokenIndex() > ctx.getStart().getTokenIndex()) ? ctx.getStop().getTokenIndex() : ctx.getStart().getTokenIndex();
    }
 
    @Override
@@ -226,7 +146,7 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
       /*
        * log the rule
        */
-      LOG.debug(ctx.getClass().getSimpleName() + " : " + node.getText());
+      logger.debug(ctx.getClass().getSimpleName() + " : " + node.getText());
       /*
        * options indenting
        */
@@ -348,7 +268,7 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
     * write to the output stream
     */
    private void write(TerminalNode node) {
-      LOG.debug("Writing: '" + node.getText() + "'");
+      logger.debug("Writing: '" + node.getText() + "'");
       /*
        * space before the output
        */
@@ -368,19 +288,6 @@ public class Antlr4ParseTreeListenerImpl implements ParseTreeListener {
        * save the previous
        */
       previousToken = node.getText();
-   }
-
-   /**
-    * write a comment
-    */
-   private void writeComment(ParserRuleContext ctx, String comment) {
-      if ((false == (ctx instanceof ANTLRv4Parser.GrammarSpecContext))) {
-         writeCR();
-      }
-      write(comment);
-      if ((true == ((ctx instanceof ANTLRv4Parser.GrammarSpecContext))) || (ctx instanceof ANTLRv4Parser.GrammarTypeContext)) {
-         writeCR();
-      }
    }
 
    /**
