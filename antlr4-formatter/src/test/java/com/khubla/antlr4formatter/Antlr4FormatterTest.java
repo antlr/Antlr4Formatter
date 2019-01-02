@@ -35,6 +35,26 @@ public class Antlr4FormatterTest {
 	}
 
 	@Test
+	public void formatComplexFragments() throws Antlr4FormatterException, IOException {
+		assertExpectedFormatting("ComplexFragments");
+	}
+
+	@Test
+	public void formatComplexFragmentsIsIdempotent() throws Antlr4FormatterException, IOException {
+		assertExpectedFormattingIsIdempotend("ComplexFragments");
+	}
+
+	@Test
+	public void formatJava8() throws Antlr4FormatterException, IOException {
+		assertExpectedFormatting("Java8");
+	}
+
+	@Test
+	public void formatJava8IsIdempotent() throws Antlr4FormatterException, IOException {
+		assertExpectedFormattingIsIdempotend("Java8");
+	}
+
+	@Test
 	public void formatAt() throws Antlr4FormatterException, IOException {
 		assertExpectedFormatting("at");
 	}
