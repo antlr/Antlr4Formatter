@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class Antlr4FormatterTest {
@@ -59,7 +58,6 @@ public class Antlr4FormatterTest {
 	public void formatAction() throws Antlr4FormatterException, IOException {
 		assertExpectedFormatting("action");
 	}
-
 
 	@Test
 	public void formatActionIsIdempotent() throws Antlr4FormatterException, IOException {
