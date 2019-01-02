@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class Antlr4FormatterTest {
@@ -32,6 +33,37 @@ public class Antlr4FormatterTest {
 	@Test
 	public void formatInlineCommentsIsIdempotent() throws Antlr4FormatterException, IOException {
 		assertExpectedFormattingIsIdempotend("InlineComments");
+	}
+
+	@Test
+	public void formatAt() throws Antlr4FormatterException, IOException {
+		assertExpectedFormatting("at");
+	}
+
+	@Test
+	public void formatAtIsIdempotent() throws Antlr4FormatterException, IOException {
+		assertExpectedFormattingIsIdempotend("at");
+	}
+
+	@Test
+	public void formatComment() throws Antlr4FormatterException, IOException {
+		assertExpectedFormatting("Comment");
+	}
+
+	@Test
+	public void formatCommentsIsIdempotent() throws Antlr4FormatterException, IOException {
+		assertExpectedFormattingIsIdempotend("Comment");
+	}
+
+	@Test
+	public void formatAction() throws Antlr4FormatterException, IOException {
+		assertExpectedFormatting("action");
+	}
+
+
+	@Test
+	public void formatActionIsIdempotent() throws Antlr4FormatterException, IOException {
+		assertExpectedFormattingIsIdempotend("action");
 	}
 
 	private void assertExpectedFormatting(String grammar) throws Antlr4FormatterException, IOException {

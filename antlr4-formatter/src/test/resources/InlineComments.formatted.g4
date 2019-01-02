@@ -8,7 +8,8 @@ root
 // match keyword hello followed by an identifier
 
 NUMBER
-   : DIGITS // do not erase me
+   : DIGITS
+   // do not erase me
    ;
 
 // match lower-case identifiers
@@ -20,5 +21,6 @@ WS
 // skip spaces, tabs, newlines
 
 fragment DIGITS
-   : '1' .. '9' '0' .. '9'* // do not erase me
+   : '1' .. '9' '0' .. '9'*
+   // do not erase me
    ;

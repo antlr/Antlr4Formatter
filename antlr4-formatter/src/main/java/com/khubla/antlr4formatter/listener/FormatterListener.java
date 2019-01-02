@@ -15,20 +15,12 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.khubla.antlr4formatter;
+package com.khubla.antlr4formatter.listener;
 
-public class Antlr4FormatterException extends Exception {
-   private static final long serialVersionUID = 1L;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
 
-   public Antlr4FormatterException(Exception e) {
-      super(e);
-   }
-
-   public Antlr4FormatterException(String message) {
-      super(message);
-   }
-
-   public Antlr4FormatterException(String message, Exception e) {
-      super(message, e);
-   }
+public interface FormatterListener extends ParseTreeListener {
+   void visitComment(ParserRuleContext ctx, Token token);
 }
