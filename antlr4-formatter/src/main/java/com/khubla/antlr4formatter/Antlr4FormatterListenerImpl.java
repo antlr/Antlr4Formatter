@@ -41,45 +41,45 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    */
    private static final Logger logger = LoggerFactory.getLogger(Antlr4FormatterListenerImpl.class);
    /**
-   * non space tokens
-   */
-   private static final Set<String> noSpacingBeforeTokens = new HashSet<>(Arrays.asList(new String[]{"?", "*", ";", ")"}));
-   private static final Set<String> noSpacingAfterTokens = new HashSet<>(Arrays.asList(new String[]{"("}));
+    * non space tokens
+    */
+   private static final Set<String> noSpacingBeforeTokens = new HashSet<>(Arrays.asList(new String[] { "?", "*", ";", ")" }));
+   private static final Set<String> noSpacingAfterTokens = new HashSet<>(Arrays.asList(new String[] { "(" }));
    /**
-   * indent
-   */
+    * indent
+    */
    private int indent = 0;
    /**
-   * current context
-   */
+    * current context
+    */
    private ParserRuleContext ctx;
    /**
-   * newline
-   */
+    * newline
+    */
    private boolean newline = true;
    /**
-   * PrintStream
-   */
+    * PrintStream
+    */
    private final Writer writer;
    /**
-   * parenth count
-   */
+    * parenth count
+    */
    private int parenthCount = 0;
    /**
-   * previous token
-   */
+    * previous token
+    */
    private String previousToken = "";
 
    /**
-   * ctor
-   */
+    * ctor
+    */
    public Antlr4FormatterListenerImpl(Writer writer) {
       this.writer = writer;
    }
 
    /**
-   * build indent
-   */
+    * build indent
+    */
    private String buildIndent(int indent) {
       final StringBuilder sb = new StringBuilder();
       for (int i = 0; i < (indent * 3); i++) {
@@ -122,7 +122,8 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    }
 
    @Override
-   public void exitEveryRule(ParserRuleContext ctx) {}
+   public void exitEveryRule(ParserRuleContext ctx) {
+   }
 
    @Override
    public void visitComment(ParserRuleContext ctx, Token token) {
@@ -150,7 +151,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
        * options indenting
        */
       if ((ctx instanceof ANTLRv4Parser.OptionsSpecContext) || (ctx instanceof ANTLRv4Parser.ModeSpecContext) || (ctx instanceof ANTLRv4Parser.TokensSpecContext)
-               || (ctx instanceof ANTLRv4Parser.ChannelsSpecContext)) {
+            || (ctx instanceof ANTLRv4Parser.ChannelsSpecContext)) {
          if (node.getSymbol().getType() == ANTLRv4Lexer.LBRACE) {
             indent++;
             writeCR();
@@ -247,8 +248,8 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    }
 
    /**
-   * write to the output stream
-   */
+    * write to the output stream
+    */
    private void write(String str) {
       /*
        * print token
@@ -264,8 +265,8 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    }
 
    /**
-   * write to the output stream
-   */
+    * write to the output stream
+    */
    private void write(TerminalNode node) {
       logger.debug("Writing: '" + node.getText() + "'");
       /*
@@ -290,8 +291,8 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    }
 
    /**
-   * write a CR
-   */
+    * write a CR
+    */
    private void writeCR() {
       writeSimple("\n");
       writeSimple(buildIndent(indent));

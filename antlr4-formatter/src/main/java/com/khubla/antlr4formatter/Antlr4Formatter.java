@@ -145,5 +145,6 @@ public class Antlr4Formatter {
       return files;
    }
 
-   private Antlr4Formatter() {}
+   private Antlr4Formatter() {
+   }
 }

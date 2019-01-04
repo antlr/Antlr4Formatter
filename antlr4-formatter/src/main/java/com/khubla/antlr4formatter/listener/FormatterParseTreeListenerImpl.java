@@ -34,28 +34,28 @@ import org.slf4j.LoggerFactory;
 
 public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    /**
-   * logger
-   */
+    * logger
+    */
    private static final Logger logger = LoggerFactory.getLogger(FormatterParseTreeListenerImpl.class);
    /**
-   * comment tokens
-   */
-   private static final Set<String> commentTokens = new HashSet<>(Arrays.asList(new String[]{"/*", "//"}));
+    * comment tokens
+    */
+   private static final Set<String> commentTokens = new HashSet<>(Arrays.asList(new String[] { "/*", "//" }));
    /**
-   * formatter
-   */
+    * formatter
+    */
    private final FormatterListener formatterListener;
    /**
-   * left comment token marker
-   */
+    * left comment token marker
+    */
    private int leftCommentTokenPos = -1;
    /**
-   * right comment token marker
-   */
+    * right comment token marker
+    */
    private int rightCommentTokenPos = -1;
    /**
-   * token stream
-   */
+    * token stream
+    */
    private final CommonTokenStream commonTokenStream;
 
    public FormatterParseTreeListenerImpl(FormatterListener formatterListener, CommonTokenStream commonTokenStream) {
@@ -139,8 +139,8 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    }
 
    /**
-   * check if string is comment
-   */
+    * check if string is comment
+    */
    private boolean isComment(String str) {
       for (final String c : commentTokens) {
          if (str.startsWith(c)) {
