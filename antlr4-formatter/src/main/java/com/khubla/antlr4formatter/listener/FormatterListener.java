@@ -22,5 +22,5 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public interface FormatterListener extends ParseTreeListener {
-	void visitComment(ParserRuleContext ctx, Token token);
+   void visitComment(ParserRuleContext ctx, Token token);
 }
