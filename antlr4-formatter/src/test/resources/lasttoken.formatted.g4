@@ -1,5 +1,4 @@
-grammar Hello
-;
+grammar Hello;
 
 WS
    : [ \t\r\n]+ -> skip

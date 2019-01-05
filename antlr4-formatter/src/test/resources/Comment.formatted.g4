@@ -1,5 +1,4 @@
-grammar Hello
-;
+grammar Hello;
 
 r
    : 'hello' ID

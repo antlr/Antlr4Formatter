@@ -54,6 +54,10 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     */
    private static final Set<Class<?>> newlineAfterRules = new HashSet<Class<?>>(Arrays.asList(new Class<?>[] { GrammarDeclContext.class, ParserRuleSpecContext.class, LexerRuleSpecContext.class }));
    /**
+    * rules which colon on new line
+    */
+   private static final Set<Class<?>> colonOnNewlineRules = new HashSet<Class<?>>(Arrays.asList(new Class<?>[] { ParserRuleSpecContext.class, LexerRuleSpecContext.class }));
+   /**
     * rules which need a NL before the rule
     */
    private static final Set<Class<?>> newlineBeforeRules = new HashSet<Class<?>>(
@@ -65,7 +69,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    /**
     * tokens which need a newline before them
     */
-   private static final Set<String> newlineBeforeTokens = new HashSet<String>(Arrays.asList(new String[] { ":", "|", ";" }));
+   private static final Set<String> newlineBeforeTokens = new HashSet<String>(Arrays.asList(new String[] { ":", "|" }));
    /**
     * rules which are interpreted as literal
     */
@@ -154,8 +158,19 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
        * eof
        */
       if (node.getSymbol().getType() != Recognizer.EOF) {
+         /*
+          * rules which require a newline before the token, like "|"
+          */
          if (newlineBeforeTokens.contains(node.toString())) {
             if (false == interpretAsLiteralRules.contains(node.getParent().getClass())) {
+               writeCR();
+            }
+         }
+         /*
+          * some rules want the ';' on a new line (like ParserRuleSpecContext, LexerRuleSpecContext)
+          */
+         if (node.toString().compareTo(";") == 0) {
+            if (colonOnNewlineRules.contains(node.getParent().getClass())) {
                writeCR();
             }
          }

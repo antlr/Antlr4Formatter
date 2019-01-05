@@ -1,5 +1,4 @@
-grammar agc
-;
+grammar agc;
 
 prog
    : line+

@@ -1,5 +1,4 @@
-grammar ComplexFragments
-; // §3.8 Identifiers (must appear after all keywords in the grammar)
+grammar ComplexFragments; // §3.8 Identifiers (must appear after all keywords in the grammar)
 
 Identifier
    : JavaLetter JavaLetterOrDigit*
@@ -20,3 +19,5 @@ fragment JavaLetterOrDigit
    | // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF [\uD800-\uDBFF] [\uDC00-\uDFFF]
    {Character.isJavaIdentifierPart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
    ;
+
+

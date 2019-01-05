@@ -1,5 +1,4 @@
-grammar InlineComments
-;
+grammar InlineComments;
 
 root
    : NUMBER

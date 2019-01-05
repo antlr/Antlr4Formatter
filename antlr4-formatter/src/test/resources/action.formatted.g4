@@ -1,5 +1,4 @@
-grammar Hello
-;
+grammar Hello;
 
 purespecifier
    : Assign val = Octalliteral

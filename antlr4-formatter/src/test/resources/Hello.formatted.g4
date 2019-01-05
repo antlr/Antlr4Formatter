@@ -1,6 +1,5 @@
 // Define a grammar called Hello
-grammar Hello
-;
+grammar Hello;
 
 r
    : 'hello' ID
