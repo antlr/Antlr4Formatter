@@ -307,7 +307,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
 
    private void writeSimple(String string) {
       try {
-         System.out.print(string);
+         // System.out.print(string);
          writer.write(string);
       } catch (final IOException e) {
          throw new RuntimeException("Could not write to writer", e);

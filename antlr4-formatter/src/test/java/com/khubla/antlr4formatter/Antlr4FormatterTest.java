@@ -34,6 +34,11 @@ public class Antlr4FormatterTest {
    }
 
    @Test
+   public void testOr() throws Antlr4FormatterException, IOException {
+      testGrammar("or.unformatted.g4", "or.formatted.g4");
+   }
+
+   @Test
    public void testComment() throws Antlr4FormatterException, IOException {
       testGrammar("Comment.unformatted.g4", "Comment.formatted.g4");
    }
