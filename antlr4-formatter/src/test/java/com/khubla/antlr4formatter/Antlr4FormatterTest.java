@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class Antlr4FormatterTest {
@@ -24,7 +23,6 @@ public class Antlr4FormatterTest {
       }
    }
 
-   @Ignore
    @Test
    public void testAction() throws Antlr4FormatterException, IOException {
       testGrammar("action.unformatted.g4", "action.formatted.g4");

@@ -57,6 +57,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
          .asList(new Class<?>[] { GrammarDeclContext.class, ParserRuleSpecContext.class, LexerRuleSpecContext.class, OptionsSpecContext.class, ModeSpecContext.class, ActionBlockContext.class }));
    private static final Set<Class<?>> indentedeRules = new HashSet<Class<?>>(Arrays.asList(new Class<?>[] { ParserRuleSpecContext.class, LexerRuleSpecContext.class }));
    private static final Set<String> newlineBeforeTokens = new HashSet<String>(Arrays.asList(new String[] { ":" }));
+   private static final Set<Class<?>> suppressSpacingRules = new HashSet<Class<?>>(Arrays.asList(new Class<?>[] { ActionBlockContext.class }));
    /**
     * indent
     */
@@ -99,7 +100,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    @Override
    public void enterEveryRule(ParserRuleContext ctx) {
       logger.debug("enter rule: " + ctx.getClass().getSimpleName());
-      System.out.println("enter rule: " + ctx.getClass().getSimpleName());
+      // System.out.println("enter rule: " + ctx.getClass().getSimpleName());
       if (newlineBeforeRules.contains(ctx.getClass())) {
          writeCR();
       }
@@ -111,7 +112,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    @Override
    public void exitEveryRule(ParserRuleContext ctx) {
       logger.debug("exit rule: " + ctx.getClass().getSimpleName());
-      System.out.println("exit rule: " + ctx.getClass().getSimpleName());
+      // System.out.println("exit rule: " + ctx.getClass().getSimpleName());
       if (indentedeRules.contains(ctx.getClass())) {
          indent--;
       }
@@ -278,7 +279,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
        * space before the output
        */
       if ((false == newline) && (false == noSpacingAfterTokens.contains(previousToken)) && (false == noSpacingBeforeTokens.contains(node.getText()))) {
-         writeSimple(" ");
+         if (false == suppressSpacingRules.contains(node.getParent().getClass())) {
+            writeSimple(" ");
+         }
       }
       /*
        * print token
