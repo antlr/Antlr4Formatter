@@ -17,15 +17,9 @@
  */
 package com.khubla.antlr4formatter.listener;
 
-import org.antlr.parser.antlr4.ANTLRv4Parser;
-import org.antlr.parser.antlr4.ANTLRv4ParserBaseListener;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
 
-public class FormatterListener extends ANTLRv4ParserBaseListener {
-   @Override
-   public void enterGrammarSpec(ANTLRv4Parser.GrammarSpecContext ctx) {
-   }
-
-   @Override
-   public void exitGrammarSpec(ANTLRv4Parser.GrammarSpecContext ctx) {
-   }
+public interface FormatterListener extends ParseTreeListener {
+   void visitComment(Token token, boolean left);
 }

@@ -44,8 +44,11 @@ options
 
 // The main entry point for parsing a v4 grammar.
 grammarSpec
-   : DOC_COMMENT* grammarType identifier SEMI prequelConstruct* rules modeSpec* EOF
+   : DOC_COMMENT* grammarDecl prequelConstruct* rules modeSpec* EOF
    ;
+
+grammarDecl:
+	grammarType identifier SEMI;
 
 grammarType
    : (LEXER GRAMMAR | PARSER GRAMMAR | GRAMMAR)

@@ -14,7 +14,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class Antlr4FormatterTest {
-   @Ignore
    @Test
    public void testHello() throws Antlr4FormatterException, IOException {
       // given
