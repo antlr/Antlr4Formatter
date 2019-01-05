@@ -222,6 +222,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
       if ((commentType == CommentType.block) || (left)) {
          writeCR();
       }
+      if (commentType == CommentType.block) {
+         writeCR();
+      }
    }
 
    @Override
