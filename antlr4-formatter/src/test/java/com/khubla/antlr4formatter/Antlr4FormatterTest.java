@@ -30,6 +30,11 @@ public class Antlr4FormatterTest {
    }
 
    @Test
+   public void testANTLR4Lexer() throws Antlr4FormatterException, IOException {
+      testGrammar("ANTLRv4Lexer.unformatted.g4", "ANTLRv4Lexer.formatted.g4");
+   }
+
+   @Test
    public void testArithmetic() throws Antlr4FormatterException, IOException {
       testGrammar("arithmetic.unformatted.g4", "arithmetic.formatted.g4");
    }
@@ -37,11 +42,6 @@ public class Antlr4FormatterTest {
    @Test
    public void testAt() throws Antlr4FormatterException, IOException {
       testGrammar("at.unformatted.g4", "at.formatted.g4");
-   }
-
-   @Test
-   public void testANTLR4Lexer() throws Antlr4FormatterException, IOException {
-      testGrammar("ANTLRv4Lexer.unformatted.g4", "ANTLRv4Lexer.formatted.g4");
    }
 
    @Test
