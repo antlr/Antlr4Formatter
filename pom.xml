@@ -121,7 +121,7 @@
 
 							<indent>
 								<tabs>true</tabs>
-								<spacesPerTab>4</spacesPerTab>
+								<spacesPerTab>3</spacesPerTab>
 							</indent>
 
 							<trimTrailingWhitespace />
