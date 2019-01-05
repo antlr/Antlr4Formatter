@@ -44,7 +44,7 @@ public class Antlr4FormatterTest {
       testGrammar("Comment.unformatted.g4", "Comment.formatted.g4");
    }
 
-   @Ignore
+   // @Ignore
    @Test
    public void testComplexFragments() throws Antlr4FormatterException, IOException {
       testGrammar("ComplexFragments.unformatted.g4", "ComplexFragments.formatted.g4");
@@ -88,6 +88,7 @@ public class Antlr4FormatterTest {
       testGrammar("or.unformatted.g4", "or.formatted.g4");
    }
 
+   @Ignore
    @Test
    public void testParenth() throws Antlr4FormatterException, IOException {
       testGrammar("parenth.unformatted.g4", "parenth.formatted.g4");

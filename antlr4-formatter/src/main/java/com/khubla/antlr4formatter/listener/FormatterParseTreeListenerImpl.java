@@ -117,17 +117,17 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
          final List<Token> refChannel = commonTokenStream.getHiddenTokensToRight(tokPos, ANTLRv4Lexer.COMMENT);
          if ((null != refChannel) && (refChannel.size() > 0)) {
             for (final Token token : refChannel) {
-               if (token.getTokenIndex() > commentTokenPos) {
-                  /*
-                   * print comments
-                   */
-                  final String str = token.getText().trim();
-                  if (str.length() > 0) {
-                     if (isComment(str)) {
-                        formatterListener.visitComment(token, false);
-                     }
+               // if (token.getTokenIndex() > commentTokenPos) {
+               /*
+                * print comments
+                */
+               final String str = token.getText().trim();
+               if (str.length() > 0) {
+                  if (isComment(str)) {
+                     formatterListener.visitComment(token, false);
                   }
                }
+               // }
                if (token.getTokenIndex() > commentTokenPos) {
                   commentTokenPos = token.getTokenIndex();
                }

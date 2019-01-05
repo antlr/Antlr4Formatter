@@ -29,90 +29,132 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-grammar arithmetic;
+grammar arithmetic
+;
 
 equation
-   : expression relop expression;
+   : expression relop expression
+   ;
 
 expression
-   : term ((PLUS | MINUS) term)*;
+   : term ((PLUS
+   | MINUS) term)*
+   ;
 
 term
-   : factor ((TIMES | DIV) factor)*;
+   : factor ((TIMES
+   | DIV) factor)*
+   ;
 
 factor
-   : signedAtom (POW signedAtom)*;
+   : signedAtom (POW signedAtom)*
+   ;
 
 signedAtom
-   : PLUS signedAtom | MINUS signedAtom | atom;
+   : PLUS signedAtom
+   | MINUS signedAtom
+   | atom
+   ;
 
 atom
-   : scientific | variable | LPAREN expression RPAREN;
+   : scientific
+   | variable
+   | LPAREN expression RPAREN
+   ;
 
 scientific
-   : SCIENTIFIC_NUMBER;
+   : SCIENTIFIC_NUMBER
+   ;
 
 variable
-   : VARIABLE;
+   : VARIABLE
+   ;
 
 relop
-   : EQ | GT | LT;
+   : EQ
+   | GT
+   | LT
+   ;
 
 VARIABLE
-   : VALID_ID_START VALID_ID_CHAR*;
+   : VALID_ID_START VALID_ID_CHAR*
+   ;
 
 fragment VALID_ID_START
-   : ('a' .. 'z') | ('A' .. 'Z') | '_';
+   : ('a' .. 'z')
+   | ('A' .. 'Z')
+   | '_'
+   ;
 
 fragment VALID_ID_CHAR
-   : VALID_ID_START | ('0' .. '9');
+   : VALID_ID_START
+   | ('0' .. '9')
+   ;
 
 SCIENTIFIC_NUMBER
-   : NUMBER (E SIGN? NUMBER)?; //The integer part gets its potential sign from the signedAtom rule
+   : NUMBER (E SIGN? NUMBER)?
+   ; //The integer part gets its potential sign from the signedAtom rule
 
 fragment NUMBER
-   : ('0' .. '9')+ ('.' ('0' .. '9')+)?;
+   : ('0' .. '9')+ ('.' ('0' .. '9')+)?
+   ;
 
 fragment E
-   : 'E' | 'e';
+   : 'E'
+   | 'e'
+   ;
 
 fragment SIGN
-   : ('+' | '-');
+   : ('+'
+   | '-')
+   ;
 
 LPAREN
-   : '(';
+   : '('
+   ;
 
 RPAREN
-   : ')';
+   : ')'
+   ;
 
 PLUS
-   : '+';
+   : '+'
+   ;
 
 MINUS
-   : '-';
+   : '-'
+   ;
 
 TIMES
-   : '*';
+   : '*'
+   ;
 
 DIV
-   : '/';
+   : '/'
+   ;
 
 GT
-   : '>';
+   : '>'
+   ;
 
 LT
-   : '<';
+   : '<'
+   ;
 
 EQ
-   : '=';
+   : '='
+   ;
 
 POINT
-   : '.';
+   : '.'
+   ;
 
 POW
-   : '^';
+   : '^'
+   ;
 
 WS
-   : [ \r\n\t]+ -> skip;
+   : [ \r\n\t]+ -> skip
+   ;
 
 
