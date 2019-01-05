@@ -234,7 +234,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
           */
          if (newlineBeforeTokens.contains(node.toString())) {
             if (false == interpretAsLiteralRules.contains(node.getParent().getClass())) {
-               writeCR();
+               if (false == this.isInParenth()) {
+                  writeCR();
+               }
             }
          }
          /*

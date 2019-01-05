@@ -36,13 +36,11 @@ equation
    ;
 
 expression
-   : term ((PLUS
-   | MINUS) term)*
+   : term ((PLUS | MINUS) term)*
    ;
 
 term
-   : factor ((TIMES
-   | DIV) factor)*
+   : factor ((TIMES | DIV) factor)*
    ;
 
 factor
@@ -104,8 +102,7 @@ fragment E
    ;
 
 fragment SIGN
-   : ('+'
-   | '-')
+   : ('+' | '-')
    ;
 
 LPAREN

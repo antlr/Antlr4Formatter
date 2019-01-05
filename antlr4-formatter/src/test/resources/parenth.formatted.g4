@@ -1,5 +1,5 @@
-
 grammar g;
 
 multiplyingExpression
-   : argument (('*' | '/' | 'mod' | 'and') argument)*;
+   : argument (('*' | '/' | 'mod' | 'and') argument)*
+   ;
