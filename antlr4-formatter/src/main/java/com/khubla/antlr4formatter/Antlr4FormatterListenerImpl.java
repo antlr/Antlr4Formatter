@@ -118,6 +118,10 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     * indent type
     */
    private IndentType indentType;
+   /**
+    * parenth count
+    */
+   private int parenthCount = 0;
 
    /**
     * ctor
@@ -175,6 +179,13 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
       return indentType;
    }
 
+   /**
+    * are we currently in a parenth?
+    */
+   protected boolean isInParenth() {
+      return (parenthCount == 0) ? false : true;
+   }
+
    public void setIndentSize(int indentSize) {
       this.indentSize = indentSize;
    }
@@ -208,6 +219,16 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
        * eof
        */
       if (node.getSymbol().getType() != Recognizer.EOF) {
+         /*
+          * count parenths
+          */
+         if (false == interpretAsLiteralRules.contains(node.getParent().getClass())) {
+            if (node.toString().compareTo("(") == 0) {
+               parenthCount++;
+            } else if (node.toString().compareTo(")") == 0) {
+               parenthCount--;
+            }
+         }
          /*
           * tokens which require a newline before the token, like '|' and ':'
           */
