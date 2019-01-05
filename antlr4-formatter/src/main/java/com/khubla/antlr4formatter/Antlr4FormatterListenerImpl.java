@@ -71,10 +71,6 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     */
    private final Writer writer;
    /**
-    * parenth count
-    */
-   // private int parenthCount = 0;
-   /**
     * previous token
     */
    private String previousToken = "";
@@ -143,107 +139,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    @Override
    public void visitTerminal(TerminalNode node) {
       /*
-       * log the rule
-       */
-      // logger.debug(ctx.getClass().getSimpleName() + " : " + node.getText());
-      /*
        * eof
        */
       if (node.getSymbol().getType() != Recognizer.EOF) {
-         // /*
-         // * options indenting
-         // */
-         // if ((ctx instanceof ANTLRv4Parser.OptionsSpecContext) || (ctx instanceof ANTLRv4Parser.ModeSpecContext) || (ctx instanceof ANTLRv4Parser.TokensSpecContext)
-         // || (ctx instanceof ANTLRv4Parser.ChannelsSpecContext)) {
-         // if (node.getSymbol().getType() == ANTLRv4Lexer.LBRACE) {
-         // indent++;
-         // // writeCR();
-         // write(node);
-         // } else if (node.getSymbol().getType() == ANTLRv4Lexer.RBRACE) {
-         // write(node);
-         // indent--;
-         // // writeCR();
-         // } else {
-         // write(node);
-         // }
-         // }
-         // /*
-         // * alts
-         // */
-         // else if (ctx instanceof ANTLRv4Parser.LabeledAltContext) {
-         // /*
-         // * count parenths
-         // */
-         // if (node.getSymbol().getType() == ANTLRv4Lexer.LPAREN) {
-         // parenthCount++;
-         // } else if (node.getSymbol().getType() == ANTLRv4Lexer.RPAREN) {
-         // parenthCount--;
-         // }
-         // /*
-         // * count indents
-         // */
-         // if (node.getSymbol().getType() == ANTLRv4Lexer.SEMI) {
-         // // writeCR();
-         // write(node);
-         // indent--;
-         // // writeCR();
-         // } else if (node.getSymbol().getType() == ANTLRv4Lexer.OR) {
-         // if (parenthCount == 0) {
-         // // writeCR();
-         // }
-         // write(node);
-         // } else {
-         // write(node);
-         // }
-         // }
-         // /*
-         // * rule indenting
-         // */
-         // else if ((ctx instanceof ANTLRv4Parser.RuleSpecContext) || (ctx instanceof ANTLRv4Parser.LexerRuleSpecContext)) {
-         // parenthCount = 0;
-         // if (node.getSymbol().getType() == ANTLRv4Lexer.COLON) {
-         // indent++;
-         // // writeCR();
-         // write(node);
-         // } else if (node.getSymbol().getType() == ANTLRv4Lexer.SEMI) {
-         // // writeCR();
-         // write(node);
-         // indent--;
-         // // writeCR();
-         // } else {
-         // write(node);
-         // }
-         // }
-         // /*
-         // * grammar spec
-         // */
-         // else if (ctx instanceof ANTLRv4Parser.GrammarSpecContext) {
-         // if (node.getSymbol().getType() == ANTLRv4Lexer.SEMI) {
-         // write(node);
-         // writeCR();
-         // writeCR();
-         // } else {
-         // write(node);
-         // }
-         // }
-         // /*
-         // * action spec
-         // */
-         // else if (ctx instanceof ANTLRv4Parser.ActionBlockContext) {
-         // if (node.getSymbol().getType() == ANTLRv4Lexer.SEMI) {
-         // write(node);
-         // // writeCR();
-         // } else {
-         // write(node);
-         // }
-         // }
-         // /*
-         // * all else
-         // */
-         // else {
-         // write(node);
-         // }
-         // }
          if (newlineBeforeTokens.contains(node.toString())) {
             writeCR();
          }
