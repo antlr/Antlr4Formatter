@@ -56,6 +56,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    private static final Set<Class<?>> newlineBeforeRules = new HashSet<Class<?>>(Arrays
          .asList(new Class<?>[] { GrammarDeclContext.class, ParserRuleSpecContext.class, LexerRuleSpecContext.class, OptionsSpecContext.class, ModeSpecContext.class, ActionBlockContext.class }));
    private static final Set<Class<?>> indentedeRules = new HashSet<Class<?>>(Arrays.asList(new Class<?>[] { ParserRuleSpecContext.class, LexerRuleSpecContext.class }));
+   private static final Set<String> newlineBeforeTokens = new HashSet<String>(Arrays.asList(new String[] { ":" }));
    /**
     * indent
     */
@@ -242,6 +243,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
          // write(node);
          // }
          // }
+         if (newlineBeforeTokens.contains(node.toString())) {
+            writeCR();
+         }
          write(node);
       } else {
          writeCR();
