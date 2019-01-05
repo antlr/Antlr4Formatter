@@ -122,6 +122,10 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     * parenth count
     */
    private int parenthCount = 0;
+   /**
+    * debug
+    */
+   private static final boolean DEBUG = false;
 
    /**
     * ctor
@@ -150,7 +154,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    @Override
    public void enterEveryRule(ParserRuleContext ctx) {
       logger.debug("enter rule: " + ctx.getClass().getSimpleName());
-      // System.out.println("enter rule: " + ctx.getClass().getSimpleName());
+      if (DEBUG) {
+         System.out.println("enter rule: " + ctx.getClass().getSimpleName());
+      }
       if (newlineBeforeRules.contains(ctx.getClass())) {
          writeCR();
       }
@@ -162,7 +168,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    @Override
    public void exitEveryRule(ParserRuleContext ctx) {
       logger.debug("exit rule: " + ctx.getClass().getSimpleName());
-      // System.out.println("exit rule: " + ctx.getClass().getSimpleName());
+      if (DEBUG) {
+         System.out.println("exit rule: " + ctx.getClass().getSimpleName());
+      }
       if (indentedeRules.contains(ctx.getClass())) {
          indent--;
       }
@@ -195,16 +203,24 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    }
 
    @Override
-   public void visitComment(Token token, boolean left) {
-      if (false == newline) {
+   public void visitComment(Token token, boolean left, CommentType commentType, boolean nl) {
+      if ((false == newline) && (false == nl)) {
          write(" ");
       }
-      if (left) {
-         write(token.getText());
+      if (nl) {
          writeCR();
+         // writeSimple("\n");
+      }
+      if (left) {
+         writeSimple(token.getText());
       } else {
-         write(token.getText());
-         // writeCR();
+         writeSimple(token.getText());
+      }
+      /*
+       * block comments need a CR or comments to the left of the current token
+       */
+      if ((commentType == CommentType.block) || (left)) {
+         writeCR();
       }
    }
 
@@ -234,7 +250,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
           */
          if (newlineBeforeTokens.contains(node.toString())) {
             if (false == interpretAsLiteralRules.contains(node.getParent().getClass())) {
-               if (false == this.isInParenth()) {
+               if (false == isInParenth()) {
                   writeCR();
                }
             }
@@ -310,7 +326,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
 
    private void writeSimple(String string) {
       try {
-         // System.out.print(string);
+         if (DEBUG) {
+            System.out.print(string);
+         }
          writer.write(string);
       } catch (final IOException e) {
          throw new RuntimeException("Could not write to writer", e);

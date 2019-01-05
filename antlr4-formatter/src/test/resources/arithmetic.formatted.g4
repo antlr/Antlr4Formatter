@@ -90,7 +90,8 @@ fragment VALID_ID_CHAR
 
 SCIENTIFIC_NUMBER
    : NUMBER (E SIGN? NUMBER)?
-   ; //The integer part gets its potential sign from the signedAtom rule
+   ;
+   //The integer part gets its potential sign from the signedAtom rule
 
 fragment NUMBER
    : ('0' .. '9')+ ('.' ('0' .. '9')+)?

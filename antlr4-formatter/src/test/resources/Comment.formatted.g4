@@ -12,6 +12,7 @@ fragment EscapeSequence
 
 ID
    : [a-z]+
-   ; // match lower-case identifiers
+   ;
+   // match lower-case identifiers
 
 

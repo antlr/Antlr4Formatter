@@ -21,5 +21,14 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public interface FormatterListener extends ParseTreeListener {
-   void visitComment(Token token, boolean left);
+   /**
+    * comment type
+    *
+    * @author tom
+    */
+   public static enum CommentType {
+      block, line
+   }
+
+   void visitComment(Token token, boolean left, CommentType commentType, boolean newLine);
 }
