@@ -126,7 +126,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
       }
       if (left) {
          write(token.getText());
-         // writeCR();
+         writeCR();
       } else {
          write(token.getText());
          // writeCR();
