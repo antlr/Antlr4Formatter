@@ -66,7 +66,6 @@ public class Antlr4FormatterTest {
       testGrammar("Hello.unformatted.g4", "Hello.formatted.g4");
    }
 
-   @Ignore
    @Test
    public void testInlineComments() throws Antlr4FormatterException, IOException {
       testGrammar("InlineComments.unformatted.g4", "InlineComments.formatted.g4");
