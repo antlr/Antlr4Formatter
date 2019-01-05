@@ -43,6 +43,11 @@ public class Antlr4FormatterTest {
       testGrammar("Comment.unformatted.g4", "Comment.formatted.g4");
    }
 
+   @Test
+   public void testParenth() throws Antlr4FormatterException, IOException {
+      testGrammar("parenth.unformatted.g4", "parenth.formatted.g4");
+   }
+
    private void testGrammar(String unformatted, String formatted) throws Antlr4FormatterException, IOException {
       // given
       final String unformattedGrammar = readFileAsUtf8ToString(unformatted);
