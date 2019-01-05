@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class Antlr4FormatterTest {
@@ -29,18 +30,13 @@ public class Antlr4FormatterTest {
    }
 
    @Test
-   public void testAt() throws Antlr4FormatterException, IOException {
-      testGrammar("at.unformatted.g4", "at.formatted.g4");
-   }
-
-   @Test
-   public void testOr() throws Antlr4FormatterException, IOException {
-      testGrammar("or.unformatted.g4", "or.formatted.g4");
-   }
-
-   @Test
    public void testArithmetic() throws Antlr4FormatterException, IOException {
       testGrammar("arithmetic.unformatted.g4", "arithmetic.formatted.g4");
+   }
+
+   @Test
+   public void testAt() throws Antlr4FormatterException, IOException {
+      testGrammar("at.unformatted.g4", "at.formatted.g4");
    }
 
    @Test
@@ -48,9 +44,10 @@ public class Antlr4FormatterTest {
       testGrammar("Comment.unformatted.g4", "Comment.formatted.g4");
    }
 
+   @Ignore
    @Test
-   public void testParenth() throws Antlr4FormatterException, IOException {
-      testGrammar("parenth.unformatted.g4", "parenth.formatted.g4");
+   public void testComplexFragments() throws Antlr4FormatterException, IOException {
+      testGrammar("ComplexFragments.unformatted.g4", "ComplexFragments.formatted.g4");
    }
 
    private void testGrammar(String unformatted, String formatted) throws Antlr4FormatterException, IOException {
@@ -69,8 +66,30 @@ public class Antlr4FormatterTest {
       testGrammar("Hello.unformatted.g4", "Hello.formatted.g4");
    }
 
+   @Ignore
+   @Test
+   public void testInlineComments() throws Antlr4FormatterException, IOException {
+      testGrammar("InlineComments.unformatted.g4", "InlineComments.formatted.g4");
+   }
+
+   @Ignore
+   @Test
+   public void testJava8() throws Antlr4FormatterException, IOException {
+      testGrammar("Java8.unformatted.g4", "Java8.formatted.g4");
+   }
+
    @Test
    public void testLastToken() throws Antlr4FormatterException, IOException {
       testGrammar("lasttoken.unformatted.g4", "lasttoken.formatted.g4");
+   }
+
+   @Test
+   public void testOr() throws Antlr4FormatterException, IOException {
+      testGrammar("or.unformatted.g4", "or.formatted.g4");
+   }
+
+   @Test
+   public void testParenth() throws Antlr4FormatterException, IOException {
+      testGrammar("parenth.unformatted.g4", "parenth.formatted.g4");
    }
 }
