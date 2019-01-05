@@ -40,6 +40,11 @@ import org.slf4j.LoggerFactory;
 import com.khubla.antlr4formatter.listener.FormatterListener;
 
 public class Antlr4FormatterListenerImpl implements FormatterListener {
+   /**
+    * tabs or space. vi or emacs.
+    *
+    * @author tom
+    */
    public static enum IndentType {
       tab, space
    }
@@ -49,9 +54,12 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     */
    private static final Logger logger = LoggerFactory.getLogger(Antlr4FormatterListenerImpl.class);
    /**
-    * non space tokens
+    * tokens that do not need a space before them
     */
    private static final Set<String> noSpacingBeforeTokens = new HashSet<>(Arrays.asList(new String[] { "?", "*", ";", ")", "+" }));
+   /**
+    * tokens that do not need a space after them
+    */
    private static final Set<String> noSpacingAfterTokens = new HashSet<>(Arrays.asList(new String[] { "(" }));
    /**
     * rules which need a NL after the rule
@@ -87,7 +95,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     */
    private static final IndentType DEFAULT_INDENT_TYPE = IndentType.space;
    /**
-    * indent
+    * indent size
     */
    private int indent = 0;
    /**
@@ -106,6 +114,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     * indent size
     */
    private int indentSize;
+   /**
+    * indent type
+    */
    private IndentType indentType;
 
    /**
