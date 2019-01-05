@@ -64,10 +64,6 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    public void enterEveryRule(ParserRuleContext ctx) {
       logger.debug("Enter rule: " + ctx.getText());
       /*
-       * left comment tokens
-       */
-      handleLeftCommentTokens(ctx);
-      /*
        * rule
        */
       formatterListener.enterEveryRule(ctx);
@@ -77,60 +73,67 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    public void exitEveryRule(ParserRuleContext ctx) {
       logger.debug("Exit rule: " + ctx.getText());
       /*
-       * right comment tokens
-       */
-      handleRightCommentTokens(ctx);
-      /*
        * rule
        */
       formatterListener.exitEveryRule(ctx);
    }
 
-   private void handleLeftCommentTokens(ParserRuleContext ctx) {
+   private void handleLeftCommentTokens(TerminalNode node) {
       /*
        * check for comment tokens left of the ctx
        */
-      final int tokPos = ctx.getStart().getTokenIndex();
+      final int tokPos = node.getSymbol().getTokenIndex();
       if (tokPos > commentTokenPos) {
-         commentTokenPos = tokPos;
          final List<Token> refChannel = commonTokenStream.getHiddenTokensToLeft(tokPos, ANTLRv4Lexer.COMMENT);
          if ((null != refChannel) && (refChannel.size() > 0)) {
             for (final Token token : refChannel) {
-               /*
-                * print comments
-                */
-               final String str = token.getText().trim();
-               if (str.length() > 0) {
-                  if (isComment(str)) {
-                     formatterListener.visitComment(token, true);
+               if (token.getTokenIndex() > commentTokenPos) {
+                  /*
+                   * print comments
+                   */
+                  final String str = token.getText().trim();
+                  if (str.length() > 0) {
+                     if (isComment(str)) {
+                        formatterListener.visitComment(token, true);
+                     }
                   }
                }
+               if (token.getTokenIndex() > commentTokenPos) {
+                  commentTokenPos = token.getTokenIndex();
+               }
             }
+         } else {
+            commentTokenPos = tokPos;
          }
       }
    }
 
-   private void handleRightCommentTokens(ParserRuleContext ctx) {
+   private void handleRightCommentTokens(TerminalNode node) {
       /*
        * check for comment tokens right of the ctx
        */
-      final int tokPos = ctx.getStart().getTokenIndex();
-      if (tokPos > commentTokenPos) {
-         commentTokenPos = tokPos;
+      final int tokPos = node.getSymbol().getTokenIndex();
+      if (tokPos >= commentTokenPos) {
          final List<Token> refChannel = commonTokenStream.getHiddenTokensToRight(tokPos, ANTLRv4Lexer.COMMENT);
          if ((null != refChannel) && (refChannel.size() > 0)) {
-            // rightCommentTokenPos += refChannel.size();
             for (final Token token : refChannel) {
-               /*
-                * print comments
-                */
-               final String str = token.getText().trim();
-               if (str.length() > 0) {
-                  if (isComment(str)) {
-                     formatterListener.visitComment(token, false);
+               if (token.getTokenIndex() > commentTokenPos) {
+                  /*
+                   * print comments
+                   */
+                  final String str = token.getText().trim();
+                  if (str.length() > 0) {
+                     if (isComment(str)) {
+                        formatterListener.visitComment(token, false);
+                     }
                   }
                }
+               if (token.getTokenIndex() > commentTokenPos) {
+                  commentTokenPos = token.getTokenIndex();
+               }
             }
+         } else {
+            commentTokenPos = tokPos;
          }
       }
    }
@@ -165,8 +168,16 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    public void visitTerminal(TerminalNode node) {
       logger.debug("Terminal: " + node.getText());
       /*
+       * left comment tokens
+       */
+      handleLeftCommentTokens(node);
+      /*
        * terminal
        */
       formatterListener.visitTerminal(node);
+      /*
+       * right comment tokens
+       */
+      handleRightCommentTokens(node);
    }
 }
