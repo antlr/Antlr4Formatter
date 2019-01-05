@@ -40,6 +40,11 @@ public class Antlr4FormatterTest {
    }
 
    @Test
+   public void testANTLR4Lexer() throws Antlr4FormatterException, IOException {
+      testGrammar("ANTLRv4Lexer.unformatted.g4", "ANTLRv4Lexer.formatted.g4");
+   }
+
+   @Test
    public void testComment() throws Antlr4FormatterException, IOException {
       testGrammar("Comment.unformatted.g4", "Comment.formatted.g4");
    }

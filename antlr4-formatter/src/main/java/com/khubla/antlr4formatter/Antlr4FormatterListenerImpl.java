@@ -29,6 +29,7 @@ import org.antlr.parser.antlr4.ANTLRv4Parser.LexerRuleSpecContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.ModeSpecContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.OptionsSpecContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.ParserRuleSpecContext;
+import org.antlr.parser.antlr4.ANTLRv4Parser.PrequelConstructContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
@@ -72,8 +73,8 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    /**
     * rules which need a NL before the rule
     */
-   private static final Set<Class<?>> newlineBeforeRules = new HashSet<Class<?>>(
-         Arrays.asList(new Class<?>[] { ParserRuleSpecContext.class, LexerRuleSpecContext.class, OptionsSpecContext.class, ModeSpecContext.class, ActionBlockContext.class }));
+   private static final Set<Class<?>> newlineBeforeRules = new HashSet<Class<?>>(Arrays.asList(new Class<?>[] { PrequelConstructContext.class, GrammarDeclContext.class, ParserRuleSpecContext.class,
+         LexerRuleSpecContext.class, OptionsSpecContext.class, ModeSpecContext.class, ActionBlockContext.class }));
    /**
     * rules which need an indent
     */
@@ -94,6 +95,10 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     * default indent type
     */
    private static final IndentType DEFAULT_INDENT_TYPE = IndentType.space;
+   /**
+    * debug
+    */
+   private static final boolean DEBUG = false;
    /**
     * indent size
     */
@@ -122,10 +127,6 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     * parenth count
     */
    private int parenthCount = 0;
-   /**
-    * debug
-    */
-   private static final boolean DEBUG = false;
 
    /**
     * ctor
