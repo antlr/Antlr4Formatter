@@ -40,9 +40,13 @@ import org.slf4j.LoggerFactory;
 import com.khubla.antlr4formatter.listener.FormatterListener;
 
 public class Antlr4FormatterListenerImpl implements FormatterListener {
+   public static enum IndentType {
+      tab, space
+   }
+
    /**
-   *
-   */
+    * logger
+    */
    private static final Logger logger = LoggerFactory.getLogger(Antlr4FormatterListenerImpl.class);
    /**
     * non space tokens
@@ -75,6 +79,14 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     */
    private static final Set<Class<?>> interpretAsLiteralRules = new HashSet<Class<?>>(Arrays.asList(new Class<?>[] { ActionBlockContext.class }));
    /**
+    * default indent size
+    */
+   private static final int DEFAULT_INDENT_SIZE = 3;
+   /**
+    * default indent type
+    */
+   private static final IndentType DEFAULT_INDENT_TYPE = IndentType.space;
+   /**
     * indent
     */
    private int indent = 0;
@@ -90,12 +102,19 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     * previous token
     */
    private String previousToken = "";
+   /**
+    * indent size
+    */
+   private int indentSize;
+   private IndentType indentType;
 
    /**
     * ctor
     */
    public Antlr4FormatterListenerImpl(Writer writer) {
       this.writer = writer;
+      indentSize = DEFAULT_INDENT_SIZE;
+      indentType = DEFAULT_INDENT_TYPE;
    }
 
    /**
@@ -103,8 +122,12 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     */
    private String buildIndent(int indent) {
       final StringBuilder sb = new StringBuilder();
-      for (int i = 0; i < (indent * 3); i++) {
-         sb.append(" ");
+      for (int i = 0; i < (indent * indentSize); i++) {
+         if (indentType == IndentType.space) {
+            sb.append(" ");
+         } else {
+            sb.append("/t");
+         }
       }
       return sb.toString();
    }
@@ -133,6 +156,22 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
       }
    }
 
+   public int getIndentSize() {
+      return indentSize;
+   }
+
+   public IndentType getIndentType() {
+      return indentType;
+   }
+
+   public void setIndentSize(int indentSize) {
+      this.indentSize = indentSize;
+   }
+
+   public void setIndentType(IndentType indentType) {
+      this.indentType = indentType;
+   }
+
    @Override
    public void visitComment(Token token, boolean left) {
       if (false == newline) {
@@ -159,7 +198,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
        */
       if (node.getSymbol().getType() != Recognizer.EOF) {
          /*
-          * rules which require a newline before the token, like "|"
+          * tokens which require a newline before the token, like '|' and ':'
           */
          if (newlineBeforeTokens.contains(node.toString())) {
             if (false == interpretAsLiteralRules.contains(node.getParent().getClass())) {
@@ -174,6 +213,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
                writeCR();
             }
          }
+         /*
+          * write the node
+          */
          write(node);
       } else {
          writeCR();
