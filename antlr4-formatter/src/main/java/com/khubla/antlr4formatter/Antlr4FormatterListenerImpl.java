@@ -127,6 +127,11 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     * parenth count
     */
    private int parenthCount = 0;
+   /**
+    * started output? rules in 'newlineBeforeRules' output a NL before they output the rule. This is done to ensure they're on a new line. However, if they are the first rule, this results in empty
+    * NL's at the top of the file. This prevents that.
+    */
+   private boolean outputStarted = false;
 
    /**
     * ctor
@@ -320,9 +325,11 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     * write a CR
     */
    private void writeCR() {
-      writeSimple("\n");
-      writeSimple(buildIndent(indent));
-      newline = true;
+      if (true == outputStarted) {
+         writeSimple("\n");
+         writeSimple(buildIndent(indent));
+         newline = true;
+      }
    }
 
    private void writeSimple(String string) {
@@ -331,6 +338,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
             System.out.print(string);
          }
          writer.write(string);
+         if ((string.trim().length() > 0) && (outputStarted == false)) {
+            outputStarted = true;
+         }
       } catch (final IOException e) {
          throw new RuntimeException("Could not write to writer", e);
       }

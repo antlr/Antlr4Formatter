@@ -1,5 +1,3 @@
-
-
 /*
  * [The "BSD license"]
  *  Copyright (c) 2012-2014 Terence Parr
