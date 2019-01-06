@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class Antlr4FormatterTest {
@@ -75,7 +74,6 @@ public class Antlr4FormatterTest {
       testGrammar("InlineComments.unformatted.g4", "InlineComments.formatted.g4");
    }
 
-   @Ignore
    @Test
    public void testJava8() throws Antlr4FormatterException, IOException {
       testGrammar("Java8.unformatted.g4", "Java8.formatted.g4");

@@ -214,8 +214,11 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
          write(" ");
       }
       if (nl) {
-         writeCR();
-         // writeSimple("\n");
+         if (commentType == CommentType.line) {
+            writeCR();
+         } else {
+            writeSimple("\n");
+         }
       }
       if (left) {
          writeSimple(token.getText());
