@@ -27,7 +27,6 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 /**
  * A Java 8 grammar for ANTLR 4 derived from the Java Language Specification
  * chapter 19.
@@ -52,10 +51,11 @@
 Total lexer+parser time 30844ms.
  */
 grammar Java8;
-
 /*
  * Productions from §3 (Lexical Structure)
  */
+
+
 literal
    : IntegerLiteral
    | FloatingPointLiteral
@@ -64,10 +64,11 @@ literal
    | StringLiteral
    | NullLiteral
    ;
-
 /*
  * Productions from §4 (Types, Values, and Variables)
  */
+   
+
 primitiveType
    : annotation* numericType
    | annotation* 'boolean'
@@ -178,10 +179,11 @@ wildcardBounds
    : 'extends' referenceType
    | 'super' referenceType
    ;
-
 /*
  * Productions from §6 (Names)
  */
+   
+
 packageName
    : Identifier
    | packageName '.' Identifier
@@ -210,10 +212,11 @@ ambiguousName
    : Identifier
    | ambiguousName '.' Identifier
    ;
-
 /*
  * Productions from §7 (Packages)
  */
+   
+
 compilationUnit
    : packageDeclaration? importDeclaration* typeDeclaration* EOF
    ;
@@ -254,10 +257,11 @@ typeDeclaration
    | interfaceDeclaration
    | ';'
    ;
-
 /*
  * Productions from §8 (Classes)
  */
+   
+
 classDeclaration
    : normalClassDeclaration
    | enumDeclaration
@@ -543,10 +547,11 @@ enumConstantModifier
 enumBodyDeclarations
    : ';' classBodyDeclaration*
    ;
-
 /*
  * Productions from §9 (Interfaces)
  */
+   
+
 interfaceDeclaration
    : normalInterfaceDeclaration
    | annotationTypeDeclaration
@@ -675,10 +680,11 @@ markerAnnotation
 singleElementAnnotation
    : '@' typeName '(' elementValue ')'
    ;
-
 /*
  * Productions from §10 (Arrays)
  */
+   
+
 arrayInitializer
    : '{' variableInitializerList? ','? '}'
    ;
@@ -686,16 +692,17 @@ arrayInitializer
 variableInitializerList
    : variableInitializer (',' variableInitializer)*
    ;
-
 /*
  * Productions from §14 (Blocks and Statements)
  */
+   
+
 block
    : '{' blockStatements? '}'
    ;
 
 blockStatements
-   : blockStatement +
+   : blockStatement+
    ;
 
 blockStatement
@@ -925,10 +932,11 @@ resourceList
 resource
    : variableModifier* unannType variableDeclaratorId '=' expression
    ;
-
 /*
  * Productions from §15 (Expressions)
  */
+   
+
 primary
    : (primaryNoNewArray_lfno_primary | arrayCreationExpression) (primaryNoNewArray_lf_primary)*
    ;
@@ -1297,794 +1305,665 @@ castExpression
    | '(' referenceType additionalBound* ')' unaryExpressionNotPlusMinus
    | '(' referenceType additionalBound* ')' lambdaExpression
    ;
-
-// LEXER
-// §3.9 Keywords
+   // LEXER
+   // §3.9 Keywords
 
 ABSTRACT
    : 'abstract'
    ;
 
-
 ASSERT
    : 'assert'
    ;
-
 
 BOOLEAN
    : 'boolean'
    ;
 
-
 BREAK
    : 'break'
    ;
-
 
 BYTE
    : 'byte'
    ;
 
-
 CASE
    : 'case'
    ;
-
 
 CATCH
    : 'catch'
    ;
 
-
 CHAR
    : 'char'
    ;
-
 
 CLASS
    : 'class'
    ;
 
-
 CONST
    : 'const'
    ;
-
 
 CONTINUE
    : 'continue'
    ;
 
-
 DEFAULT
    : 'default'
    ;
-
 
 DO
    : 'do'
    ;
 
-
 DOUBLE
    : 'double'
    ;
-
 
 ELSE
    : 'else'
    ;
 
-
 ENUM
    : 'enum'
    ;
-
 
 EXTENDS
    : 'extends'
    ;
 
-
 FINAL
    : 'final'
    ;
-
 
 FINALLY
    : 'finally'
    ;
 
-
 FLOAT
    : 'float'
    ;
-
 
 FOR
    : 'for'
    ;
 
-
 IF
    : 'if'
    ;
-
 
 GOTO
    : 'goto'
    ;
 
-
 IMPLEMENTS
    : 'implements'
    ;
-
 
 IMPORT
    : 'import'
    ;
 
-
 INSTANCEOF
    : 'instanceof'
    ;
-
 
 INT
    : 'int'
    ;
 
-
 INTERFACE
    : 'interface'
    ;
-
 
 LONG
    : 'long'
    ;
 
-
 NATIVE
    : 'native'
    ;
-
 
 NEW
    : 'new'
    ;
 
-
 PACKAGE
    : 'package'
    ;
-
 
 PRIVATE
    : 'private'
    ;
 
-
 PROTECTED
    : 'protected'
    ;
-
 
 PUBLIC
    : 'public'
    ;
 
-
 RETURN
    : 'return'
    ;
-
 
 SHORT
    : 'short'
    ;
 
-
 STATIC
    : 'static'
    ;
-
 
 STRICTFP
    : 'strictfp'
    ;
 
-
 SUPER
    : 'super'
    ;
-
 
 SWITCH
    : 'switch'
    ;
 
-
 SYNCHRONIZED
    : 'synchronized'
    ;
-
 
 THIS
    : 'this'
    ;
 
-
 THROW
    : 'throw'
    ;
-
 
 THROWS
    : 'throws'
    ;
 
-
 TRANSIENT
    : 'transient'
    ;
-
 
 TRY
    : 'try'
    ;
 
-
 VOID
    : 'void'
    ;
-
 
 VOLATILE
    : 'volatile'
    ;
 
-
 WHILE
    : 'while'
    ;
-
-// §3.10.1 Integer Literals
+   // §3.10.1 Integer Literals
 
 IntegerLiteral
-   : DecimalIntegerLiteral | HexIntegerLiteral | OctalIntegerLiteral | BinaryIntegerLiteral
+   : DecimalIntegerLiteral
+   | HexIntegerLiteral
+   | OctalIntegerLiteral
+   | BinaryIntegerLiteral
    ;
-
 
 fragment DecimalIntegerLiteral
    : DecimalNumeral IntegerTypeSuffix?
    ;
 
-
 fragment HexIntegerLiteral
    : HexNumeral IntegerTypeSuffix?
    ;
-
 
 fragment OctalIntegerLiteral
    : OctalNumeral IntegerTypeSuffix?
    ;
 
-
 fragment BinaryIntegerLiteral
    : BinaryNumeral IntegerTypeSuffix?
    ;
-
 
 fragment IntegerTypeSuffix
    : [lL]
    ;
 
-
 fragment DecimalNumeral
-   : '0' | NonZeroDigit (Digits? | Underscores Digits)
+   : '0'
+   | NonZeroDigit (Digits? | Underscores Digits)
    ;
-
 
 fragment Digits
    : Digit (DigitsAndUnderscores? Digit)?
    ;
 
-
 fragment Digit
-   : '0' | NonZeroDigit
+   : '0'
+   | NonZeroDigit
    ;
-
 
 fragment NonZeroDigit
    : [1-9]
    ;
 
-
 fragment DigitsAndUnderscores
-   : DigitOrUnderscore +
+   : DigitOrUnderscore+
    ;
-
 
 fragment DigitOrUnderscore
-   : Digit | '_'
+   : Digit
+   | '_'
    ;
-
 
 fragment Underscores
-   : '_' +
+   : '_'+
    ;
-
 
 fragment HexNumeral
    : '0' [xX] HexDigits
    ;
 
-
 fragment HexDigits
    : HexDigit (HexDigitsAndUnderscores? HexDigit)?
    ;
-
 
 fragment HexDigit
    : [0-9a-fA-F]
    ;
 
-
 fragment HexDigitsAndUnderscores
-   : HexDigitOrUnderscore +
+   : HexDigitOrUnderscore+
    ;
-
 
 fragment HexDigitOrUnderscore
-   : HexDigit | '_'
+   : HexDigit
+   | '_'
    ;
-
 
 fragment OctalNumeral
    : '0' Underscores? OctalDigits
    ;
 
-
 fragment OctalDigits
    : OctalDigit (OctalDigitsAndUnderscores? OctalDigit)?
    ;
-
 
 fragment OctalDigit
    : [0-7]
    ;
 
-
 fragment OctalDigitsAndUnderscores
-   : OctalDigitOrUnderscore +
+   : OctalDigitOrUnderscore+
    ;
-
 
 fragment OctalDigitOrUnderscore
-   : OctalDigit | '_'
+   : OctalDigit
+   | '_'
    ;
-
 
 fragment BinaryNumeral
    : '0' [bB] BinaryDigits
    ;
 
-
 fragment BinaryDigits
    : BinaryDigit (BinaryDigitsAndUnderscores? BinaryDigit)?
    ;
-
 
 fragment BinaryDigit
    : [01]
    ;
 
-
 fragment BinaryDigitsAndUnderscores
-   : BinaryDigitOrUnderscore +
+   : BinaryDigitOrUnderscore+
    ;
-
 
 fragment BinaryDigitOrUnderscore
-   : BinaryDigit | '_'
+   : BinaryDigit
+   | '_'
    ;
-
-// §3.10.2 Floating-Point Literals
+   // §3.10.2 Floating-Point Literals
 
 FloatingPointLiteral
-   : DecimalFloatingPointLiteral | HexadecimalFloatingPointLiteral
+   : DecimalFloatingPointLiteral
+   | HexadecimalFloatingPointLiteral
    ;
-
 
 fragment DecimalFloatingPointLiteral
-   : Digits '.' Digits? ExponentPart? FloatTypeSuffix? | '.' Digits ExponentPart? FloatTypeSuffix? | Digits ExponentPart FloatTypeSuffix? | Digits FloatTypeSuffix
+   : Digits '.' Digits? ExponentPart? FloatTypeSuffix?
+   | '.' Digits ExponentPart? FloatTypeSuffix?
+   | Digits ExponentPart FloatTypeSuffix?
+   | Digits FloatTypeSuffix
    ;
-
 
 fragment ExponentPart
    : ExponentIndicator SignedInteger
    ;
 
-
 fragment ExponentIndicator
    : [eE]
    ;
-
 
 fragment SignedInteger
    : Sign? Digits
    ;
 
-
 fragment Sign
    : [+-]
    ;
-
 
 fragment FloatTypeSuffix
    : [fFdD]
    ;
 
-
 fragment HexadecimalFloatingPointLiteral
    : HexSignificand BinaryExponent FloatTypeSuffix?
    ;
 
-
 fragment HexSignificand
-   : HexNumeral '.'? | '0' [xX] HexDigits? '.' HexDigits
+   : HexNumeral '.'?
+   | '0' [xX] HexDigits? '.' HexDigits
    ;
-
 
 fragment BinaryExponent
    : BinaryExponentIndicator SignedInteger
    ;
 
-
 fragment BinaryExponentIndicator
    : [pP]
    ;
-
-// §3.10.3 Boolean Literals
+   // §3.10.3 Boolean Literals
 
 BooleanLiteral
-   : 'true' | 'false'
+   : 'true'
+   | 'false'
    ;
-
-// §3.10.4 Character Literals
+   // §3.10.4 Character Literals
 
 CharacterLiteral
-   : '\'' SingleCharacter '\'' | '\'' EscapeSequence '\''
+   : '\'' SingleCharacter '\''
+   | '\'' EscapeSequence '\''
    ;
-
 
 fragment SingleCharacter
    : ~ ['\\\r\n]
    ;
-
-// §3.10.5 String Literals
+   // §3.10.5 String Literals
 
 StringLiteral
    : '"' StringCharacters? '"'
    ;
 
-
 fragment StringCharacters
-   : StringCharacter +
+   : StringCharacter+
    ;
-
 
 fragment StringCharacter
-   : ~ ["\\\r\n] | EscapeSequence
+   : ~ ["\\\r\n]
+   | EscapeSequence
    ;
-
-// §3.10.6 Escape Sequences for Character and String Literals
+   // §3.10.6 Escape Sequences for Character and String Literals
 
 fragment EscapeSequence
-   : '\\' [btnfr"'\\] | OctalEscape | UnicodeEscape
-   // This is not in the spec but prevents having to preprocess the input
+   : '\\' [btnfr"'\\]
+   | OctalEscape
+   | UnicodeEscape // This is not in the spec but prevents having to preprocess the input
    ;
-
 
 fragment OctalEscape
-   : '\\' OctalDigit | '\\' OctalDigit OctalDigit | '\\' ZeroToThree OctalDigit OctalDigit
+   : '\\' OctalDigit
+   | '\\' OctalDigit OctalDigit
+   | '\\' ZeroToThree OctalDigit OctalDigit
    ;
-
 
 fragment ZeroToThree
    : [0-3]
    ;
-
-// This is not in the spec but prevents having to preprocess the input
+   // This is not in the spec but prevents having to preprocess the input
 
 fragment UnicodeEscape
-   : '\\' 'u' + HexDigit HexDigit HexDigit HexDigit
+   : '\\' 'u'+ HexDigit HexDigit HexDigit HexDigit
    ;
-
-// §3.10.7 The Null Literal
+   // §3.10.7 The Null Literal
 
 NullLiteral
    : 'null'
    ;
-
-// §3.11 Separators
+   // §3.11 Separators
 
 LPAREN
    : '('
    ;
 
-
 RPAREN
    : ')'
    ;
-
 
 LBRACE
    : '{'
    ;
 
-
 RBRACE
    : '}'
    ;
-
 
 LBRACK
    : '['
    ;
 
-
 RBRACK
    : ']'
    ;
-
 
 SEMI
    : ';'
    ;
 
-
 COMMA
    : ','
    ;
 
-
 DOT
    : '.'
    ;
-
-// §3.12 Operators
+   // §3.12 Operators
 
 ASSIGN
    : '='
    ;
 
-
 GT
    : '>'
    ;
-
 
 LT
    : '<'
    ;
 
-
 BANG
    : '!'
    ;
-
 
 TILDE
    : '~'
    ;
 
-
 QUESTION
    : '?'
    ;
-
 
 COLON
    : ':'
    ;
 
-
 EQUAL
    : '=='
    ;
-
 
 LE
    : '<='
    ;
 
-
 GE
    : '>='
    ;
-
 
 NOTEQUAL
    : '!='
    ;
 
-
 AND
    : '&&'
    ;
-
 
 OR
    : '||'
    ;
 
-
 INC
    : '++'
    ;
-
 
 DEC
    : '--'
    ;
 
-
 ADD
    : '+'
    ;
-
 
 SUB
    : '-'
    ;
 
-
 MUL
    : '*'
    ;
-
 
 DIV
    : '/'
    ;
 
-
 BITAND
    : '&'
    ;
-
 
 BITOR
    : '|'
    ;
 
-
 CARET
    : '^'
    ;
-
 
 MOD
    : '%'
    ;
 
-
 ARROW
    : '->'
    ;
-
 
 COLONCOLON
    : '::'
    ;
 
-
 ADD_ASSIGN
    : '+='
    ;
-
 
 SUB_ASSIGN
    : '-='
    ;
 
-
 MUL_ASSIGN
    : '*='
    ;
-
 
 DIV_ASSIGN
    : '/='
    ;
 
-
 AND_ASSIGN
    : '&='
    ;
-
 
 OR_ASSIGN
    : '|='
    ;
 
-
 XOR_ASSIGN
    : '^='
    ;
-
 
 MOD_ASSIGN
    : '%='
    ;
 
-
 LSHIFT_ASSIGN
    : '<<='
    ;
-
 
 RSHIFT_ASSIGN
    : '>>='
    ;
 
-
 URSHIFT_ASSIGN
    : '>>>='
    ;
-
-// §3.8 Identifiers (must appear after all keywords in the grammar)
+   // §3.8 Identifiers (must appear after all keywords in the grammar)
 
 Identifier
    : JavaLetter JavaLetterOrDigit*
    ;
 
-
 fragment JavaLetter
-   : [a-zA-Z$_]
-   // these are the "java letters" below 0x7F
-   |
-   // covers all characters above 0x7F which are not a surrogate
-   ~ [\u0000-\u007F\uD800-\uDBFF]{Character.isJavaIdentifierStart(_input.LA(-1))}?
-   |
-   // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
-   [\uD800-\uDBFF][\uDC00-\uDFFF]{Character.isJavaIdentifierStart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?;
-
+   : [a-zA-Z$_] // these are the "java letters" below 0x7F
+   | // covers all characters above 0x7F which are not a surrogate ~ [\u0000-\u007F\uD800-\uDBFF]
+   {Character.isJavaIdentifierStart(_input.LA(-1))}?
+   | // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF [\uD800-\uDBFF] [\uDC00-\uDFFF]
+   {Character.isJavaIdentifierStart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
+   ;
 
 fragment JavaLetterOrDigit
    : [a-zA-Z0-9$_] // these are the "java letters or digits" below 0x7F
-   | // covers all characters above 0x7F which are not a surrogate
-   ~ [\u0000-\u007F\uD800-\uDBFF]{Character.isJavaIdentifierPart(_input.LA(-1))}?
-   |
-   // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
-
-//
-// Additional symbols not defined in the lexical specification
-//
+   | // covers all characters above 0x7F which are not a surrogate ~ [\u0000-\u007F\uD800-\uDBFF]
+   {Character.isJavaIdentifierPart(_input.LA(-1))}?
+   | // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF [\uD800-\uDBFF] [\uDC00-\uDFFF]
+   {Character.isJavaIdentifierPart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
+   ;
+   //
+   // Additional symbols not defined in the lexical specification
+   //
 
 AT
    : '@'
    ;
 
-
 ELLIPSIS
    : '...'
    ;
+   //
+   // Whitespace and comments
+   //
 
-//
-// Whitespace and comments
-//
-
-WS  :  [ \t\r\n\u000C]+ -> skip
-    ;
+WS
+   : [ \t\r\n\u000C]+ -> skip
+   ;
 
 COMMENT
-    :   '/*' .*? '*/' -> skip
-    ;
+   : '/*' .*? '*/' -> skip
+   ;
 
 LINE_COMMENT
-    :   '//' ~[\r\n]* -> skip
-    ;
+   : '//' ~ [\r\n]* -> skip
+   ;
+
+
