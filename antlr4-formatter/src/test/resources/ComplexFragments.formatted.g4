@@ -25,4 +25,3 @@ fragment JavaLetterOrDigit
    {Character.isJavaIdentifierPart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
    ;
 
-

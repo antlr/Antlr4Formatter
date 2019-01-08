@@ -61,7 +61,7 @@ public class Antlr4FormatterTest {
       final String result = Antlr4Formatter.format(unformattedGrammar);
       System.out.println(result);
       // then
-      assertThat(result.trim()).isEqualTo(formattedGrammar.trim());
+      assertThat(result).isEqualTo(formattedGrammar);
    }
 
    @Test

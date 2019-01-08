@@ -5,4 +5,3 @@ purespecifier
    {if($val.text.compareTo("0")!=0) throw new InputMismatchException(this);}
    ;
 
-
