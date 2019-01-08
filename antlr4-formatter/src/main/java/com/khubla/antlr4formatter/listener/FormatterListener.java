@@ -1,5 +1,5 @@
 /*
- * Antlr4Formatter Copyright 2018, khubla.com
+ * Antlr4Formatter Copyright 2015, khubla.com
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,10 +17,18 @@
  */
 package com.khubla.antlr4formatter.listener;
 
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public interface FormatterListener extends ParseTreeListener {
-   void visitComment(ParserRuleContext ctx, Token token);
+   /**
+    * comment type
+    *
+    * @author tom
+    */
+   public static enum CommentType {
+      block, line
+   }
+
+   void visitComment(Token token, boolean left, CommentType commentType, boolean newLine);
 }

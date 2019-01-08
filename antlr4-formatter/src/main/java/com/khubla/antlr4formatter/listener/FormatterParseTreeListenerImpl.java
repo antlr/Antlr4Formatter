@@ -32,6 +32,8 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.khubla.antlr4formatter.listener.FormatterListener.CommentType;
+
 public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    /**
     * logger
@@ -46,13 +48,9 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
     */
    private final FormatterListener formatterListener;
    /**
-    * left comment token marker
+    * comment token marker
     */
-   private int leftCommentTokenPos = -1;
-   /**
-    * right comment token marker
-    */
-   private int rightCommentTokenPos = -1;
+   private int commentTokenPos = -1;
    /**
     * token stream
     */
@@ -68,10 +66,6 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    public void enterEveryRule(ParserRuleContext ctx) {
       logger.debug("Enter rule: " + ctx.getText());
       /*
-       * left comment tokens
-       */
-      handleLeftCommentTokens(ctx);
-      /*
        * rule
        */
       formatterListener.enterEveryRule(ctx);
@@ -81,59 +75,109 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    public void exitEveryRule(ParserRuleContext ctx) {
       logger.debug("Exit rule: " + ctx.getText());
       /*
-       * right comment tokens
-       */
-      handleRightCommentTokens(ctx);
-      /*
        * rule
        */
       formatterListener.exitEveryRule(ctx);
    }
 
-   private void handleLeftCommentTokens(ParserRuleContext ctx) {
+   private CommentType getCommentType(String comment) {
+      if (comment.startsWith("//")) {
+         return CommentType.line;
+      } else {
+         return CommentType.block;
+      }
+   }
+
+   private void handleLeftCommentTokens(TerminalNode node) {
       /*
        * check for comment tokens left of the ctx
        */
-      final int tokPos = tokenStart(ctx);
-      if (tokPos > leftCommentTokenPos) {
-         leftCommentTokenPos = tokPos;
-         final List<Token> refChannel = commonTokenStream.getHiddenTokensToLeft(tokPos, ANTLRv4Lexer.COMMENT);
-         if ((null != refChannel) && (refChannel.size() > 0)) {
-            for (final Token token : refChannel) {
-               /*
-                * print comments
-                */
-               final String str = token.getText().trim();
-               if (str.length() > 0) {
-                  if (isComment(str)) {
-                     formatterListener.visitComment(ctx, token);
+      final int tokPos = node.getSymbol().getTokenIndex();
+      if (tokPos > commentTokenPos) {
+         /*
+          * get comment tokens to left of current token
+          */
+         final List<Token> leftCommentTokens = commonTokenStream.getHiddenTokensToLeft(tokPos, ANTLRv4Lexer.COMMENT);
+         if ((null != leftCommentTokens) && (leftCommentTokens.size() > 0)) {
+            /*
+             * walk comment tokens
+             */
+            for (final Token commentToken : leftCommentTokens) {
+               if (commentToken.getTokenIndex() > commentTokenPos) {
+                  /*
+                   * check if there is a CRLF skipped in there
+                   */
+                  final List<Token> skippedTokens = commonTokenStream.getHiddenTokensToLeft(commentToken.getTokenIndex(), ANTLRv4Lexer.OFF_CHANNEL);
+                  int lfCount = 0;
+                  if (null != skippedTokens) {
+                     for (final Token skippedToken : skippedTokens) {
+                        if (skippedToken.getText().indexOf("\n") != -1) {
+                           lfCount++;
+                        }
+                     }
+                  }
+                  /*
+                   * print comments
+                   */
+                  final String str = commentToken.getText().trim();
+                  if (str.length() > 0) {
+                     if (isComment(str)) {
+                        formatterListener.visitComment(commentToken, true, getCommentType(commentToken.getText()), (lfCount > 0) ? true : false);
+                     }
                   }
                }
+               if (commentToken.getTokenIndex() > commentTokenPos) {
+                  commentTokenPos = commentToken.getTokenIndex();
+               }
             }
+         } else {
+            commentTokenPos = tokPos;
          }
       }
    }
 
-   private void handleRightCommentTokens(ParserRuleContext ctx) {
+   private void handleRightCommentTokens(TerminalNode node) {
       /*
        * check for comment tokens right of the ctx
        */
-      final int tokPos = tokenStop(ctx);
-      if (tokPos > rightCommentTokenPos) {
-         rightCommentTokenPos = tokPos;
-         final List<Token> refChannel = commonTokenStream.getHiddenTokensToRight(tokPos, ANTLRv4Lexer.COMMENT);
-         if ((null != refChannel) && (refChannel.size() > 0)) {
-            for (final Token token : refChannel) {
+      final int tokPos = node.getSymbol().getTokenIndex();
+      if (tokPos >= commentTokenPos) {
+         /*
+          * get comment tokens to right of current token
+          */
+         final List<Token> rightCommentTokens = commonTokenStream.getHiddenTokensToRight(tokPos, ANTLRv4Lexer.COMMENT);
+         if ((null != rightCommentTokens) && (rightCommentTokens.size() > 0)) {
+            /*
+             * walk comment tokens
+             */
+            for (final Token commentToken : rightCommentTokens) {
+               /*
+                * check if there is a CRLF skipped in there
+                */
+               final List<Token> skippedTokens = commonTokenStream.getHiddenTokensToLeft(commentToken.getTokenIndex(), ANTLRv4Lexer.OFF_CHANNEL);
+               int lfCount = 0;
+               if (null != skippedTokens) {
+                  for (final Token skippedToken : skippedTokens) {
+                     if (skippedToken.getText().indexOf("\n") != -1) {
+                        lfCount++;
+                     }
+                  }
+               }
                /*
                 * print comments
                 */
-               final String str = token.getText().trim();
+               final String str = commentToken.getText().trim();
                if (str.length() > 0) {
                   if (isComment(str)) {
-                     formatterListener.visitComment(ctx, token);
+                     formatterListener.visitComment(commentToken, false, getCommentType(commentToken.getText()), (lfCount > 0) ? true : false);
                   }
                }
+               if (commentToken.getTokenIndex() > commentTokenPos) {
+                  commentTokenPos = commentToken.getTokenIndex();
+               }
             }
+         } else {
+            commentTokenPos = tokPos;
          }
       }
    }
@@ -150,11 +194,11 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
       return false;
    }
 
-   private int tokenStart(ParserRuleContext ctx) {
+   protected int tokenStart(ParserRuleContext ctx) {
       return (ctx.getStart().getTokenIndex() < ctx.getStop().getTokenIndex()) ? ctx.getStart().getTokenIndex() : ctx.getStop().getTokenIndex();
    }
 
-   private int tokenStop(ParserRuleContext ctx) {
+   protected int tokenStop(ParserRuleContext ctx) {
       return (ctx.getStop().getTokenIndex() > ctx.getStart().getTokenIndex()) ? ctx.getStop().getTokenIndex() : ctx.getStart().getTokenIndex();
    }
 
@@ -167,6 +211,17 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    @Override
    public void visitTerminal(TerminalNode node) {
       logger.debug("Terminal: " + node.getText());
+      /*
+       * left comment tokens
+       */
+      handleLeftCommentTokens(node);
+      /*
+       * terminal
+       */
       formatterListener.visitTerminal(node);
+      /*
+       * right comment tokens
+       */
+      handleRightCommentTokens(node);
    }
 }

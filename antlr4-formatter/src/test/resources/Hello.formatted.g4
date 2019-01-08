@@ -1,20 +1,16 @@
 // Define a grammar called Hello
-
 grammar Hello;
 
-// match keyword hello followed by an identifier
 r
    : 'hello' ID
-   ;
-
-// match lower-case identifiers
+   ; // match keyword hello followed by an identifier
 
 ID
-   : [a-z] +
-   ;
-
-// skip spaces, tabs, newlines
+   : [a-z]+
+   ; // match lower-case identifiers
 
 WS
-   : [ \t\r\n] + -> skip
-   ;
+   : [ \t\r\n]+ -> skip
+   ; // skip spaces, tabs, newlines
+
+
