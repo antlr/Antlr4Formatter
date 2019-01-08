@@ -93,4 +93,31 @@ public class Antlr4FormatterTest {
    public void testParenth() throws Antlr4FormatterException, IOException {
       testGrammar("parenth.unformatted.g4", "parenth.formatted.g4");
    }
+
+   private void testFormatterIdempotence(String unformatted, String formatted) throws Antlr4FormatterException, IOException {
+      // given
+      final String unformattedGrammar = readFileAsUtf8ToString(unformatted);
+      final String formattedGrammar = readFileAsUtf8ToString(formatted);
+
+      // when
+      final String result = Antlr4Formatter.format(Antlr4Formatter.format(unformattedGrammar));
+
+      // then
+      assertThat(result).isEqualTo(formattedGrammar);
+   }
+
+   @Test
+   public void testJava8Idempotence() throws Antlr4FormatterException, IOException {
+      testFormatterIdempotence("Java8.unformatted.g4", "Java8.formatted.g4");
+   }
+
+   @Test
+   public void testANTLR4LexerIdempotence() throws Antlr4FormatterException, IOException {
+      testFormatterIdempotence("ANTLRv4Lexer.unformatted.g4", "ANTLRv4Lexer.formatted.g4");
+   }
+
+   @Test
+   public void testArithmeticIdempotence() throws Antlr4FormatterException, IOException {
+      testFormatterIdempotence("arithmetic.unformatted.g4", "arithmetic.formatted.g4");
+   }
 }
