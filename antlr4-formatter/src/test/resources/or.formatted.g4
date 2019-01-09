@@ -12,4 +12,3 @@ line
    | assignment_line
    ;
 
-
