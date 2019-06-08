@@ -2,6 +2,7 @@ package com.khubla.antlr4formatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,9 +11,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 public class Antlr4FormatterTest {
+   /**
+    * output dir for formatted grammars
+    */
+   private static final String TEST_RESULTS = "target/test_results/";
+
    private String readFileAsUtf8ToString(String fileName) throws IOException, Antlr4FormatterException {
       try {
          final URI uri = Antlr4FormatterTest.class.getClassLoader().getResource(fileName).toURI();
@@ -54,13 +61,20 @@ public class Antlr4FormatterTest {
    }
 
    private void testGrammar(String unformatted, String formatted) throws Antlr4FormatterException, IOException {
-      // given
+      /*
+       * given
+       */
       final String unformattedGrammar = readFileAsUtf8ToString(unformatted);
       final String formattedGrammar = readFileAsUtf8ToString(formatted);
-      // when
+      /*
+       * when
+       */
       final String result = Antlr4Formatter.format(unformattedGrammar);
-      System.out.println(result);
-      // then
+      FileUtils.writeByteArrayToFile(new File(TEST_RESULTS + unformatted), result.getBytes());
+      // System.out.println(result);
+      /*
+       * then
+       */
       assertThat(result).isEqualTo(formattedGrammar);
    }
 
@@ -95,14 +109,18 @@ public class Antlr4FormatterTest {
    }
 
    private void testFormatterIdempotence(String unformatted, String formatted) throws Antlr4FormatterException, IOException {
-      // given
+      /*
+       * given
+       */
       final String unformattedGrammar = readFileAsUtf8ToString(unformatted);
       final String formattedGrammar = readFileAsUtf8ToString(formatted);
-
-      // when
+      /*
+       * when
+       */
       final String result = Antlr4Formatter.format(Antlr4Formatter.format(unformattedGrammar));
-
-      // then
+      /*
+       * then
+       */
       assertThat(result).isEqualTo(formattedGrammar);
    }
 
