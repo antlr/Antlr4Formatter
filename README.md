@@ -22,7 +22,7 @@ To format a grammar use the script `formatFile.sh` passing the grammar file as a
 ```xml
 <groupId>com.khubla.antlr4formatter</groupId>
 <artifactId>antlr4-formatter</artifactId>
-<version>1.1.0</version>
+<version>1.2.1-SNAPSHOT</version>
 <packaging>jar</packaging>
 ```
 
