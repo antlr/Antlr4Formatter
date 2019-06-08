@@ -222,11 +222,10 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
             writeSimple("\n");
          }
       }
-      if (left) {
-         writeSimple(token.getText());
-      } else {
-         writeSimple(token.getText());
-      }
+      /*
+       * write the comment
+       */
+      writeSimple(token.getText());
       /*
        * block comments need a CR or comments to the left of the current token
        */
