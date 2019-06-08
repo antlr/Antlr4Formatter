@@ -351,7 +351,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
             outputStarted = true;
          }
       } catch (final IOException e) {
-         throw new RuntimeException("Could not write to writer", e);
+         logger.error("Could not write to writer", e);
       }
    }
 }
