@@ -181,7 +181,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
          indent--;
       }
       if (newlineAfterRules.contains(ctx.getClass())) {
-         writeCR();
+         if (false == newline) {
+            writeCR();
+         }
       }
    }
 
@@ -231,6 +233,9 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
       if ((commentType == CommentType.block) || (left)) {
          writeCR();
       }
+      if ((commentType == CommentType.line) || (!left)) {
+         writeCR();
+      }
    }
 
    @Override
@@ -258,9 +263,11 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
           * tokens which require a newline before the token, like '|' and ':'
           */
          if (newlineBeforeTokens.contains(node.toString())) {
-            if (false == interpretAsLiteralRules.contains(node.getParent().getClass())) {
-               if (false == isInParenth()) {
-                  writeCR();
+            if (false == newline) {
+               if (false == interpretAsLiteralRules.contains(node.getParent().getClass())) {
+                  if (false == isInParenth()) {
+                     writeCR();
+                  }
                }
             }
          }

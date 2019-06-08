@@ -68,7 +68,7 @@ literal
  * Productions from §4 (Types, Values, and Variables)
  */
    
-
+   
 primitiveType
    : annotation* numericType
    | annotation* 'boolean'
@@ -183,7 +183,7 @@ wildcardBounds
  * Productions from §6 (Names)
  */
    
-
+   
 packageName
    : Identifier
    | packageName '.' Identifier
@@ -216,7 +216,7 @@ ambiguousName
  * Productions from §7 (Packages)
  */
    
-
+   
 compilationUnit
    : packageDeclaration? importDeclaration* typeDeclaration* EOF
    ;
@@ -261,7 +261,7 @@ typeDeclaration
  * Productions from §8 (Classes)
  */
    
-
+   
 classDeclaration
    : normalClassDeclaration
    | enumDeclaration
@@ -551,7 +551,7 @@ enumBodyDeclarations
  * Productions from §9 (Interfaces)
  */
    
-
+   
 interfaceDeclaration
    : normalInterfaceDeclaration
    | annotationTypeDeclaration
@@ -684,7 +684,7 @@ singleElementAnnotation
  * Productions from §10 (Arrays)
  */
    
-
+   
 arrayInitializer
    : '{' variableInitializerList? ','? '}'
    ;
@@ -696,7 +696,7 @@ variableInitializerList
  * Productions from §14 (Blocks and Statements)
  */
    
-
+   
 block
    : '{' blockStatements? '}'
    ;
@@ -936,7 +936,7 @@ resource
  * Productions from §15 (Expressions)
  */
    
-
+   
 primary
    : (primaryNoNewArray_lfno_primary | arrayCreationExpression) (primaryNoNewArray_lf_primary)*
    ;
@@ -1306,8 +1306,9 @@ castExpression
    | '(' referenceType additionalBound* ')' lambdaExpression
    ;
    // LEXER
+   
    // §3.9 Keywords
-
+   
 ABSTRACT
    : 'abstract'
    ;
@@ -1508,7 +1509,7 @@ WHILE
    : 'while'
    ;
    // §3.10.1 Integer Literals
-
+   
 IntegerLiteral
    : DecimalIntegerLiteral
    | HexIntegerLiteral
@@ -1630,7 +1631,7 @@ fragment BinaryDigitOrUnderscore
    | '_'
    ;
    // §3.10.2 Floating-Point Literals
-
+   
 FloatingPointLiteral
    : DecimalFloatingPointLiteral
    | HexadecimalFloatingPointLiteral
@@ -1680,13 +1681,13 @@ fragment BinaryExponentIndicator
    : [pP]
    ;
    // §3.10.3 Boolean Literals
-
+   
 BooleanLiteral
    : 'true'
    | 'false'
    ;
    // §3.10.4 Character Literals
-
+   
 CharacterLiteral
    : '\'' SingleCharacter '\''
    | '\'' EscapeSequence '\''
@@ -1696,7 +1697,7 @@ fragment SingleCharacter
    : ~ ['\\\r\n]
    ;
    // §3.10.5 String Literals
-
+   
 StringLiteral
    : '"' StringCharacters? '"'
    ;
@@ -1710,11 +1711,12 @@ fragment StringCharacter
    | EscapeSequence
    ;
    // §3.10.6 Escape Sequences for Character and String Literals
-
+   
 fragment EscapeSequence
    : '\\' [btnfr"'\\]
    | OctalEscape
    | UnicodeEscape // This is not in the spec but prevents having to preprocess the input
+   
    ;
 
 fragment OctalEscape
@@ -1727,17 +1729,17 @@ fragment ZeroToThree
    : [0-3]
    ;
    // This is not in the spec but prevents having to preprocess the input
-
+   
 fragment UnicodeEscape
    : '\\' 'u'+ HexDigit HexDigit HexDigit HexDigit
    ;
    // §3.10.7 The Null Literal
-
+   
 NullLiteral
    : 'null'
    ;
    // §3.11 Separators
-
+   
 LPAREN
    : '('
    ;
@@ -1774,7 +1776,7 @@ DOT
    : '.'
    ;
    // §3.12 Operators
-
+   
 ASSIGN
    : '='
    ;
@@ -1919,7 +1921,7 @@ URSHIFT_ASSIGN
    : '>>>='
    ;
    // §3.8 Identifiers (must appear after all keywords in the grammar)
-
+   
 Identifier
    : JavaLetter JavaLetterOrDigit*
    ;
@@ -1944,9 +1946,11 @@ fragment JavaLetterOrDigit
    {Character.isJavaIdentifierPart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
    ;
    //
+   
    // Additional symbols not defined in the lexical specification
+   
    //
-
+   
 AT
    : '@'
    ;
@@ -1955,9 +1959,11 @@ ELLIPSIS
    : '...'
    ;
    //
+   
    // Whitespace and comments
+   
    //
-
+   
 WS
    : [ \t\r\n\u000C]+ -> skip
    ;
