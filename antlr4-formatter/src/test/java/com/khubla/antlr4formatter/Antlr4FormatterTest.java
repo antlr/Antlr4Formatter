@@ -130,6 +130,17 @@ public class Antlr4FormatterTest {
    }
 
    @Test
+   public void testCSharpPreprocessorParser() throws Antlr4FormatterException, IOException {
+      testGrammar("CSharpPreprocessorParser.unformatted.g4", "CSharpPreprocessorParser.formatted.g4");
+   }
+
+   @Test
+   public void testCSharpPreprocessorParserIdempotence() throws Antlr4FormatterException, IOException {
+      testFormatterIdempotence("CSharpPreprocessorParser.unformatted.g4", "CSharpPreprocessorParser.formatted.g4");
+   }
+
+
+   @Test
    public void testLastToken() throws Antlr4FormatterException, IOException {
       testGrammar("lasttoken.unformatted.g4", "lasttoken.formatted.g4");
    }
