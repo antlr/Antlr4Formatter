@@ -25,7 +25,7 @@ private boolean allConditions() {
 	return true;
 }
 }
-preprocessor_directive returns [boolean value]
+preprocessor_directive returns[boolean value]
    : DEFINE CONDITIONAL_SYMBOL directive_new_line_or_sharp
    { ConditionalSymbols.add($CONDITIONAL_SYMBOL.text);
 	   $value = allConditions(); } # preprocessorDeclaration
@@ -61,7 +61,7 @@ directive_new_line_or_sharp
    | EOF
    ;
 
-preprocessor_expression returns [String value]
+preprocessor_expression returns[String value]
    : TRUE
    { $value = "true"; }
    | FALSE
