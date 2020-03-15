@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.antlr.parser.antlr4.ANTLRv4Parser.ArgActionBlockContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.ActionBlockContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.GrammarDeclContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.LexerRuleSpecContext;
@@ -86,7 +87,7 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
    /**
     * rules which are interpreted as literal
     */
-   private static final Set<Class<?>> interpretAsLiteralRules = new HashSet<Class<?>>(Arrays.asList(new Class<?>[] { ActionBlockContext.class }));
+   private static final Set<Class<?>> interpretAsLiteralRules = new HashSet<Class<?>>(Arrays.asList(new Class<?>[] { ArgActionBlockContext.class, ActionBlockContext.class }));
    /**
     * default indent size
     */
