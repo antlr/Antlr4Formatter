@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.khubla.antlr4formatter</groupId>
 		<artifactId>antlr4-formatter-parent</artifactId>
-		<version>1.2.1-SNAPSHOT</version>
+		<version>1.2.1</version>
 	</parent>
 
 	<artifactId>antlr4-formatter-standalone</artifactId>
