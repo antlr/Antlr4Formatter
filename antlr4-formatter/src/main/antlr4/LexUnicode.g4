@@ -35,7 +35,9 @@
  */
 lexer grammar LexUnicode;
 // ======================================================
+
 // Lexer fragments
+
 //
 
 fragment UnicodeLetter

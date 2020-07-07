@@ -42,7 +42,7 @@ public class FormatterParseTreeListenerImpl implements ParseTreeListener {
    /**
     * comment tokens
     */
-   private static final Set<String> commentTokens = new HashSet<>(Arrays.asList(new String[] { "/*", "//" }));
+   private static final Set<String> commentTokens = new HashSet<>(Arrays.asList(new String[]{"/*", "//"}));
    /**
     * formatter
     */
