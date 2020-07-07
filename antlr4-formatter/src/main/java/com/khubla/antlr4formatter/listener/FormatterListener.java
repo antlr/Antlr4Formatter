@@ -26,7 +26,8 @@ public interface FormatterListener extends ParseTreeListener {
     *
     * @author tom
     */
-   public static enum CommentType {
+   public static enum CommentType
+   {
       block, line
    }
 

@@ -139,7 +139,6 @@ public class Antlr4FormatterTest {
       testFormatterIdempotence("CSharpPreprocessorParser.unformatted.g4", "CSharpPreprocessorParser.formatted.g4");
    }
 
-
    @Test
    public void testLastToken() throws Antlr4FormatterException, IOException {
       testGrammar("lasttoken.unformatted.g4", "lasttoken.formatted.g4");

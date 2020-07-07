@@ -23,8 +23,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.antlr.parser.antlr4.ANTLRv4Parser.ArgActionBlockContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.ActionBlockContext;
+import org.antlr.parser.antlr4.ANTLRv4Parser.ArgActionBlockContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.GrammarDeclContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.LexerRuleSpecContext;
 import org.antlr.parser.antlr4.ANTLRv4Parser.ModeSpecContext;
@@ -47,7 +47,8 @@ public class Antlr4FormatterListenerImpl implements FormatterListener {
     *
     * @author tom
     */
-   public static enum IndentType {
+   public static enum IndentType
+   {
       tab, space
    }
 
