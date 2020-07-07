@@ -99,6 +99,11 @@
 					<encoding>UTF-8</encoding>
 
 					<java>
+						<includes>
+							<include>src/main/java/**/*.java</include>
+							<include>src/test/java/**/*.java</include>
+						</includes>
+
 						<eclipse>
 							<file>${maven.multiModuleProjectDirectory}/format.eclipse.xml</file>
 							<version>4.7.1</version>
