@@ -15,7 +15,7 @@ To build `antlr4-formatter` and the standalone utility `antlr4-formatter-standal
 
 ## Using the standalone formatter
 
-To format a grammar use the script `formatFile.sh` passing the grammar file as an argument to the script.
+To format a grammar use the script `formatFile.sh` passing the grammar file as an argument to the script.  You can also use it with the Spotless plugin in [gradle](https://github.com/diffplug/spotless/tree/main/plugin-gradle#antlr4formatter) or [maven](https://github.com/diffplug/spotless/tree/main/plugin-maven#antlr4formatter).
 
 ## Maven Coordinates
 
