@@ -66,6 +66,5 @@ public class StandaloneFormatter {
       System.exit(1);
    }
 
-   private StandaloneFormatter() {
-   }
+   private StandaloneFormatter() {}
 }

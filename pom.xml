@@ -24,7 +24,7 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<junit.version>4.12</junit.version>
 		<assertj.version>3.12.2</assertj.version>
-		<spotless.version>1.17.0</spotless.version>
+		<spotless.version>2.0.0</spotless.version>
 	</properties>
 
 	<dependencies>
@@ -99,6 +99,11 @@
 					<encoding>UTF-8</encoding>
 
 					<java>
+						<includes>
+							<include>src/main/java/**/*.java</include>
+							<include>src/test/java/**/*.java</include>
+						</includes>
+
 						<eclipse>
 							<file>${maven.multiModuleProjectDirectory}/format.eclipse.xml</file>
 							<version>4.7.1</version>
@@ -110,6 +115,12 @@
 							<file>${maven.multiModuleProjectDirectory}/format.importorder</file>
 						</importOrder>
 					</java>
+
+					<antlr4>
+						<antlr4Formatter>
+							<version>1.2.1</version>
+						</antlr4Formatter>
+					</antlr4>
 
 					<formats>
 						<format>
