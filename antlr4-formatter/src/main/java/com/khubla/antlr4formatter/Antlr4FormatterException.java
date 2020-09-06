@@ -18,17 +18,17 @@
 package com.khubla.antlr4formatter;
 
 public class Antlr4FormatterException extends Exception {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   public Antlr4FormatterException(Exception e) {
-      super(e);
-   }
+	public Antlr4FormatterException(Exception e) {
+		super(e);
+	}
 
-   public Antlr4FormatterException(String message) {
-      super(message);
-   }
+	public Antlr4FormatterException(String message) {
+		super(message);
+	}
 
-   public Antlr4FormatterException(String message, Exception e) {
-      super(message, e);
-   }
+	public Antlr4FormatterException(String message, Exception e) {
+		super(message, e);
+	}
 }

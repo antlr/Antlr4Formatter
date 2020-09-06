@@ -17,19 +17,18 @@
  */
 package com.khubla.antlr4formatter.listener;
 
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.*;
 
 public interface FormatterListener extends ParseTreeListener {
-   /**
-    * comment type
-    *
-    * @author tom
-    */
-   public static enum CommentType
-   {
-      block, line
-   }
+	/**
+	 * comment type
+	 *
+	 * @author tom
+	 */
+	public static enum CommentType {
+		block, line
+	}
 
-   void visitComment(Token token, boolean left, CommentType commentType, boolean newLine);
+	void visitComment(Token token, boolean left, CommentType commentType, boolean newLine);
 }
