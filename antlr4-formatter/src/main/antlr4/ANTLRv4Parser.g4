@@ -42,7 +42,6 @@ parser grammar ANTLRv4Parser;
 
 options { tokenVocab = ANTLRv4Lexer; }
 // The main entry point for parsing a v4 grammar.
-
 grammarSpec
    : DOC_COMMENT* grammarDecl prequelConstruct* rules modeSpec* EOF
    ;
@@ -55,11 +54,9 @@ grammarType
    : (LEXER GRAMMAR | PARSER GRAMMAR | GRAMMAR)
    ;
    // This is the list of all constructs that can be declared before
-   
    // the set of rules that compose the grammar, and is invoked 0..n
-   
    // times by the grammarPrequel rule.
-   
+
 prequelConstruct
    : optionsSpec
    | delegateGrammars
@@ -68,9 +65,8 @@ prequelConstruct
    | action_
    ;
    // ------------
-   
    // Options - things that affect analysis and/or code generation
-   
+
 optionsSpec
    : OPTIONS LBRACE (option SEMI)* RBRACE
    ;
@@ -86,9 +82,8 @@ optionValue
    | INT
    ;
    // ------------
-   
    // Delegates
-   
+
 delegateGrammars
    : IMPORT delegateGrammar (COMMA delegateGrammar)* SEMI
    ;
@@ -98,9 +93,8 @@ delegateGrammar
    | identifier
    ;
    // ------------
-   
    // Tokens & Channels
-   
+
 tokensSpec
    : TOKENS LBRACE idList? RBRACE
    ;
@@ -113,12 +107,12 @@ idList
    : identifier (COMMA identifier)* COMMA?
    ;
    // Match stuff like @parser::members {int i;}
-   
+
 action_
    : AT (actionScopeName COLONCOLON)? identifier actionBlock
    ;
    // Scope names could collide with keywords; allow them as ids for action scopes
-   
+
 actionScopeName
    : identifier
    | LEXER
@@ -171,9 +165,8 @@ ruleReturns
    : RETURNS argActionBlock
    ;
    // --------------
-   
    // Exception spec
-   
+
 throwsSpec
    : THROWS identifier (COMMA identifier)*
    ;
@@ -190,17 +183,12 @@ ruleModifiers
    : ruleModifier+
    ;
    // An individual access modifier for a rule. The 'fragment' modifier
-   
    // is an internal indication for lexer rules that they do not match
-   
    // from the input but are like subroutines for other lexer rules to
-   
    // reuse for certain lexical patterns. The other modifiers are passed
-   
    // to the code generation templates and may be ignored by the template
-   
    // if they are of no use in that language.
-   
+
 ruleModifier
    : PUBLIC
    | PRIVATE
@@ -220,9 +208,8 @@ labeledAlt
    : alternative (POUND identifier)?
    ;
    // --------------------
-   
    // Lexer rules
-   
+
 lexerRuleSpec
    : DOC_COMMENT* FRAGMENT? TOKEN_REF COLON lexerRuleBlock SEMI
    ;
@@ -239,7 +226,6 @@ lexerAlt
    : lexerElements lexerCommands?
    |
    // explicitly allow empty alts
-   
    ;
 
 lexerElements
@@ -253,7 +239,7 @@ lexerElement
    | actionBlock QUESTION?
    ;
    // but preds can be anywhere
-   
+
 labeledLexerElement
    : identifier (ASSIGN | PLUS_ASSIGN) (lexerAtom | lexerBlock)
    ;
@@ -262,7 +248,7 @@ lexerBlock
    : LPAREN lexerAltList RPAREN
    ;
    // E.g., channel(HIDDEN), skip, more, mode(INSIDE), push(INSIDE), pop
-   
+
 lexerCommands
    : RARROW lexerCommand (COMMA lexerCommand)*
    ;
@@ -282,9 +268,8 @@ lexerCommandExpr
    | INT
    ;
    // --------------------
-   
    // Rule Alts
-   
+
 altList
    : alternative (OR alternative)*
    ;
@@ -293,7 +278,6 @@ alternative
    : elementOptions? element+
    |
    // explicitly allow empty alts
-   
    ;
 
 element
@@ -307,9 +291,8 @@ labeledElement
    : identifier (ASSIGN | PLUS_ASSIGN) (atom | block)
    ;
    // --------------------
-   
    // EBNF and blocks
-   
+
 ebnf
    : block blockSuffix?
    ;
@@ -339,9 +322,8 @@ atom
    | DOT elementOptions?
    ;
    // --------------------
-   
    // Inverted element set
-   
+
 notSet
    : NOT setElement
    | NOT blockSet
@@ -358,23 +340,20 @@ setElement
    | LEXER_CHAR_SET
    ;
    // -------------
-   
    // Grammar Block
-   
+
 block
    : LPAREN (optionsSpec? ruleAction* COLON)? altList RPAREN
    ;
    // ----------------
-   
    // Parser rule ref
-   
+
 ruleref
    : RULE_REF argActionBlock? elementOptions?
    ;
    // ---------------
-   
    // Character Range
-   
+
 characterRange
    : STRING_LITERAL RANGE STRING_LITERAL
    ;
@@ -384,9 +363,8 @@ terminal
    | STRING_LITERAL elementOptions?
    ;
    // Terminals may be adorned with certain options when
-   
    // reference in the grammar: TOK<,,,>
-   
+
 elementOptions
    : LT elementOption (COMMA elementOption)* GT
    ;

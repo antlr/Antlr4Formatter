@@ -35,13 +35,9 @@
  */
 lexer grammar LexBasic;
 // ======================================================
-
 // Lexer fragments
-
 //
-
 // -----------------------------------
-
 // Whitespace & Comments
 
 fragment Ws
@@ -69,11 +65,9 @@ fragment LineComment
    : '//' ~ [\r\n]*
    ;
    // -----------------------------------
-   
    // Escapes
-   
    // Any kind of escaped character that we can embed within ANTLR literal strings.
-   
+
 fragment EscSeq
    : Esc ([btnfr"'\\] | UnicodeEsc | . | EOF)
    ;
@@ -86,17 +80,15 @@ fragment UnicodeEsc
    : 'u' (HexDigit (HexDigit (HexDigit HexDigit?)?)?)?
    ;
    // -----------------------------------
-   
    // Numerals
-   
+
 fragment DecimalNumeral
    : '0'
    | [1-9] DecDigit*
    ;
    // -----------------------------------
-   
    // Digits
-   
+
 fragment HexDigit
    : [0-9a-fA-F]
    ;
@@ -105,9 +97,8 @@ fragment DecDigit
    : [0-9]
    ;
    // -----------------------------------
-   
    // Literals
-   
+
 fragment BoolLiteral
    : 'true'
    | 'false'
@@ -129,9 +120,8 @@ fragment USQuoteLiteral
    : SQuote (EscSeq | ~ ['\r\n\\])*
    ;
    // -----------------------------------
-   
    // Character ranges
-   
+
 fragment NameChar
    : NameStartChar
    | '0' .. '9'
@@ -157,18 +147,15 @@ fragment NameStartChar
    | '\uFDF0' .. '\uFFFD'
    ;
    // ignores | ['\u10000-'\uEFFFF] ;
-   
    // -----------------------------------
-   
    // Types
-   
+
 fragment Int
    : 'int'
    ;
    // -----------------------------------
-   
    // Symbols
-   
+
 fragment Esc
    : '\\'
    ;
