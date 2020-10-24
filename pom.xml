@@ -24,7 +24,7 @@
 		<slf4j.version>1.7.30</slf4j.version>
 		<junit.version>4.13</junit.version>
 		<assertj.version>3.17.2</assertj.version>
-		<spotless.version>2.4.2</spotless.version>
+		<spotless.version>2.5.0</spotless.version>
 	</properties>
 
 	<dependencies>
