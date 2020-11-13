@@ -23,7 +23,7 @@
 		<!-- dependencies used in all modules -->
 		<slf4j.version>1.7.30</slf4j.version>
 		<junit.version>4.13.1</junit.version>
-		<assertj.version>3.17.2</assertj.version>
+		<assertj.version>3.18.1</assertj.version>
 	</properties>
 
 	<dependencies>
