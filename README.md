@@ -1,5 +1,4 @@
 ![CI](https://github.com/antlr/Antlr4Formatter/workflows/CI/badge.svg)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/81751584621541f39dd49aec48e79a7f)](https://www.codacy.com/app/teverett/Antlr4Formatter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=teverett/Antlr4Formatter&amp;utm_campaign=Badge_Grade)
 
 # Antlr4Formatter
 

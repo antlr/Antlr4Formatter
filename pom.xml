@@ -24,7 +24,6 @@
 		<slf4j.version>1.7.30</slf4j.version>
 		<junit.version>4.13.1</junit.version>
 		<assertj.version>3.17.2</assertj.version>
-		<spotless.version>2.6.0</spotless.version>
 	</properties>
 
 	<dependencies>
@@ -87,58 +86,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>com.diffplug.spotless</groupId>
-				<artifactId>spotless-maven-plugin</artifactId>
-				<version>${spotless.version}</version>
-				<configuration>
-					<lineEndings>UNIX</lineEndings>
-
-					<encoding>UTF-8</encoding>
-
-					<java>
-						<includes>
-							<include>src/main/java/**/*.java</include>
-							<include>src/test/java/**/*.java</include>
-						</includes>
-
-						<eclipse>
-							<file>${maven.multiModuleProjectDirectory}/format.eclipse.xml</file>
-							<version>4.7.1</version>
-						</eclipse>
-
-						<removeUnusedImports />
-
-						<importOrder>
-							<file>${maven.multiModuleProjectDirectory}/format.importorder</file>
-						</importOrder>
-					</java>
-
-					<antlr4>
-						<antlr4Formatter>
-							<version>1.2.1</version>
-						</antlr4Formatter>
-					</antlr4>
-
-					<formats>
-						<format>
-							<includes>
-								<include>**/pom.xml</include>
-							</includes>
-
-							<indent>
-								<tabs>true</tabs>
-								<spacesPerTab>3</spacesPerTab>
-							</indent>
-
-							<trimTrailingWhitespace />
-
-							<endWithNewline />
-						</format>
-					</formats>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
