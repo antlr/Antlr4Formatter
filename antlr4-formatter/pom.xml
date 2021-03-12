@@ -10,7 +10,7 @@
 	<artifactId>antlr4-formatter</artifactId>
 
 	<properties>
-		<antlr.version>4.9.1</antlr.version>
+		<antlr.version>4.9.2</antlr.version>
 	</properties>
 
 	<dependencies>
