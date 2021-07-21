@@ -12,7 +12,7 @@
 
 	<properties>
 		<commons-cli.version>1.4</commons-cli.version>
-		<logback.version>1.2.3</logback.version>
+		<logback.version>1.2.4</logback.version>
 	</properties>
 
 	<dependencies>
