@@ -21,6 +21,8 @@ import java.io.*;
 import java.nio.charset.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.antlr.parser.antlr4.*;
 import org.antlr.parser.antlr4.ANTLRv4Parser.*;
@@ -63,9 +65,8 @@ public class Antlr4Formatter {
 		}
 	}
 
-	public static void formatDirectory(String inputDirOption) throws Antlr4FormatterException {
-		List<String> files = new ArrayList<>();
-		files = listFilesFromDirectory(inputDirOption, files, ".g4");
+	public static void formatDirectory(final String inputDirOption) throws Antlr4FormatterException {
+        final List<String> files = listFilesFromDirectory(inputDirOption, ".g4");
 		for (final String filename : files) {
 			final File file = new File(filename);
 			formatSingleFile(file, file);
@@ -107,26 +108,20 @@ public class Antlr4Formatter {
 		formatSingleFile(inputFile, outputFile);
 	}
 
-	private static List<String> listFilesFromDirectory(String dir, List<String> files, String filter) {
-		final File file = new File(dir);
-		final String[] list = file.list();
-		if (null != list) {
-			for (final String s : list) {
-				final String fileName = dir + (dir.endsWith("/") ? "" : "/") + s;
-				final File f2 = new File(fileName);
-				if (!f2.isHidden()) {
-					if (f2.isDirectory()) {
-						listFilesFromDirectory(fileName + "/", files, filter);
-					} else {
-						if (fileName.endsWith(filter)) {
-							files.add(fileName);
-						}
-					}
-				}
-			}
-		}
-		return files;
-	}
+    private static List<String> listFilesFromDirectory(final String dir, final String filter) {
+        try (Stream<Path> stream = Files.walk(Path.of(dir))) {
+            return stream.filter(p -> {
+                try {
+                    return Files.isRegularFile(p) && !Files.isHidden(p) && p.toString().endsWith(filter);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).map(p -> p.toString()).collect(Collectors.toList());
+        } catch (IOException ioe) {
+            LOG.error("Could not list files from directory {}", ioe.getMessage());
+            return Collections.emptyList();
+        }
+    }
 
 	private Antlr4Formatter() {
 	}
