@@ -1,0 +1,35 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/anter4codeformat/app/build.gradle",
+      "selection": {
+        "end": {
+          "column": 45,
+          "index": 1018,
+          "line": 47
+        },
+        "start": {
+          "column": 45,
+          "index": 1018,
+          "line": 47
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/anter4codeformat/app/src/main/java/org/antlr/parser/antlr4/LexerAdaptor.java",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        },
+        "start": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/anter4codeformat/app/src/main/java/org/antlr/parser/antlr4/LexerAdaptor.java"
+}
