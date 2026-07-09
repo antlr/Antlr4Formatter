@@ -1,0 +1,20 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/anter4codeformat/app/build.gradle",
+      "selection": {
+        "end": {
+          "column": 47,
+          "index": 1020,
+          "line": 47
+        },
+        "start": {
+          "column": 47,
+          "index": 1020,
+          "line": 47
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/anter4codeformat/app/build.gradle"
+}
